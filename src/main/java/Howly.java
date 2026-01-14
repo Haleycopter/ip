@@ -30,7 +30,10 @@ public class Howly {
                     System.out.println(" " + (i + 1) + ". " + tasks[i]);
                 }
                 System.out.println("____________________________________________________________");
-            } else if (userInput.startsWith("mark ")) {
+                continue;
+            }
+
+            if (userInput.startsWith("mark ")) {
                 int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
                 if (index >= 0 && index < taskCount) {
                     tasks[index].markAsDone();
@@ -39,7 +42,10 @@ public class Howly {
                     System.out.println("   " + tasks[index]);
                     System.out.println("____________________________________________________________");
                 }
-            } else if (userInput.startsWith("unmark ")) {
+                continue;
+            }
+
+            if (userInput.startsWith("unmark ")) {
                 int index = Integer.parseInt(userInput.split(" ")[1]) - 1;
                 if (index >= 0 && index < taskCount) {
                     tasks[index].markAsNotDone();
@@ -48,11 +54,37 @@ public class Howly {
                     System.out.println("   " + tasks[index]);
                     System.out.println("____________________________________________________________");
                 }
-            } else { //add a new task
-                tasks[taskCount] = new Task(userInput);
+                continue;
+            }
+
+            //add new tasks
+            Task newTask = null;
+            if (userInput.startsWith("todo ")) {
+                String desc = userInput.substring(5).trim();
+                newTask = new ToDo(desc);
+            } else if (userInput.startsWith("deadline ")) {
+                String[] parts = userInput.substring(9).split("/by", 2);
+                if (parts.length == 2) {
+                    String desc = parts[0].trim();
+                    String by = parts[1].trim();
+                    newTask = new Deadline(desc, by);
+                }
+            } else if (userInput.startsWith("event ")) {
+                String[] parts = userInput.substring(6).split("/from|/to");
+                if (parts.length == 3) {
+                    String desc = parts[0].trim();
+                    String from = parts[1].trim();
+                    String to = parts[2].trim();
+                    newTask = new Event(desc, from, to);
+                }
+            }
+            if (newTask != null) {
+                tasks[taskCount] = newTask;
                 taskCount++;
                 System.out.println("____________________________________________________________");
-                System.out.println(" added: " + userInput);
+                System.out.println(" Got it. I've added this task:");
+                System.out.println("   " + newTask);
+                System.out.println(" Now you have " + taskCount + " tasks in the list.");
                 System.out.println("____________________________________________________________");
             }
         }
