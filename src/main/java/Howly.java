@@ -13,7 +13,7 @@ public class Howly {
         Task[] tasks = new Task[100]; //fixed-size array to store tasks
         int taskCount = 0;
 
-        while (true) {
+        while (scanner.hasNextLine()) {
             String userInput = scanner.nextLine().trim();
             if (userInput.equals("bye")) {
                 String exitMsg = "____________________________________________________________\n"
