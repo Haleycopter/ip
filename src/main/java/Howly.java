@@ -19,7 +19,7 @@ public class Howly {
                 if (userInput.equals("bye")) {
                     System.out.println("____________________________________________________________");
                     System.out.println(" Bye. Hope to see you again soon!");
-                    System.out.println("____________________________________________________________");
+                    System.out.print("____________________________________________________________");
                     break;
                 }
 
@@ -34,6 +34,8 @@ public class Howly {
                     handleMarkUnmark(userInput, tasks, true);
                 } else if (userInput.startsWith("unmark")) {
                     handleMarkUnmark(userInput, tasks, false);
+                } else if (userInput.startsWith("delete")) {
+                    handleDelete(userInput, tasks);
                 } else if (userInput.startsWith("todo") || userInput.startsWith("deadline")
                         || userInput.startsWith("event")) {
                     Task newTask = createTask(userInput);
@@ -111,6 +113,24 @@ public class Howly {
             System.out.println(" OK, I've marked this task as not done yet:");
         }
         System.out.println("   " + task);
+        System.out.println("____________________________________________________________");
+    }
+
+    private static void handleDelete(String input, ArrayList<Task> tasks) throws HowlyException {
+        String[] parts = input.split(" ");
+        if (parts.length < 2) {
+            throw new HowlyException("Please specify which task number to delete.");
+        }
+        int index = Integer.parseInt(parts[1]) - 1;
+        if (index < 0 || index >= tasks.size()) {
+            throw new HowlyException("I can't delete task " + (index + 1) + " because it doesn't exist.");
+        }
+
+        Task removedTask = tasks.remove(index);
+        System.out.println("____________________________________________________________");
+        System.out.println(" Noted. I've removed this task:");
+        System.out.println("  " + removedTask);
+        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
         System.out.println("____________________________________________________________");
     }
 }
