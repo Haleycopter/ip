@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Howly {
     public static void main(String[] args) {
@@ -8,13 +9,13 @@ public class Howly {
         System.out.println(" What can I do for you?");
         System.out.println("____________________________________________________________");
 
-        Task[] tasks = new Task[100]; //fixed-size array to store tasks
-        int taskCount = 0;
+        ArrayList<Task> tasks = new ArrayList<>();
 
         while (scanner.hasNextLine()) {
             try {
                 String userInput = scanner.nextLine().trim();
                 if (userInput.isEmpty()) continue;
+
                 if (userInput.equals("bye")) {
                     System.out.println("____________________________________________________________");
                     System.out.println(" Bye. Hope to see you again soon!");
@@ -25,26 +26,25 @@ public class Howly {
                 if (userInput.equals("list")) {
                     System.out.println("____________________________________________________________");
                     System.out.println(" Here are the tasks in your list:");
-                    for (int i = 0; i < taskCount; i++) {
-                        System.out.println(" " + (i + 1) + ". " + tasks[i]);
+                    for (int i = 0; i < tasks.size(); i++) {
+                        System.out.println(" " + (i + 1) + ". " + tasks.get(i));
                     }
                     System.out.println("____________________________________________________________");
                 } else if (userInput.startsWith("mark")) {
-                    handleMarkUnmark(userInput, tasks, taskCount, true);
+                    handleMarkUnmark(userInput, tasks, true);
                 } else if (userInput.startsWith("unmark")) {
-                    handleMarkUnmark(userInput, tasks, taskCount, false);
+                    handleMarkUnmark(userInput, tasks, false);
                 } else if (userInput.startsWith("todo") || userInput.startsWith("deadline")
                         || userInput.startsWith("event")) {
                     Task newTask = createTask(userInput);
-                    tasks[taskCount] = newTask;
-                    taskCount++;
+                    tasks.add(newTask);
                     System.out.println("____________________________________________________________");
                     System.out.println(" Got it. I've added this task:");
                     System.out.println("   " + newTask);
-                    System.out.println(" Now you have " + taskCount + " tasks in the list.");
+                    System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
                     System.out.println("____________________________________________________________");
                 } else {
-                    throw new HowlyException("I'm sorry, please enter a valid task: todo, deadline or event");
+                    throw new HowlyException("Please enter a valid task: todo, deadline or event.");
                 }
             } catch (HowlyException e) {
                 System.out.println("____________________________________________________________");
@@ -90,26 +90,27 @@ public class Howly {
         }
     }
 
-    private static void handleMarkUnmark(String input, Task[] tasks, int count, boolean isMark) throws HowlyException {
+    private static void handleMarkUnmark(String input, ArrayList<Task> tasks, boolean isMark) throws HowlyException {
         String[] parts = input.split(" ");
         if (parts.length < 2) {
             throw new HowlyException("Please specify a task number.");
         }
         int index = Integer.parseInt(parts[1]) - 1;
-        if (index < 0 || index >= count) {
+        if (index < 0 || index >= tasks.size()) {
             throw new HowlyException("Task number " + (index + 1) + " does not exist.");
         }
 
+        Task task = tasks.get(index);
         if (isMark) {
-            tasks[index].markAsDone();
+            task.markAsDone();
             System.out.println("____________________________________________________________");
             System.out.println(" Nice! I've marked this task as done:");
         } else {
-            tasks[index].markAsNotDone();
+            task.markAsNotDone();
             System.out.println("____________________________________________________________");
             System.out.println(" OK, I've marked this task as not done yet:");
         }
-        System.out.println("   " + tasks[index]);
+        System.out.println("   " + task);
         System.out.println("____________________________________________________________");
     }
 }
