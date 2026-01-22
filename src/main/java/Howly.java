@@ -19,37 +19,37 @@ public class Howly {
                 CommandType command = CommandType.fromString(parts[0]);
 
                 switch (command) {
-                    case BYE:
-                        printHorizontalLine();
-                        System.out.println(" Bye. Hope to see you again soon!");
-                        printHorizontalLine();
-                        return;
+                case BYE:
+                    printHorizontalLine();
+                    System.out.println(" Bye. Hope to see you again soon!");
+                    printHorizontalLine();
+                    return;
 
-                    case LIST:
-                        printList(tasks);
-                        break;
+                case LIST:
+                    printList(tasks);
+                    break;
 
-                    case MARK:
-                        handleMarkUnmark(userInput, tasks, true);
-                        break;
+                case MARK:
+                    handleMarkUnmark(userInput, tasks, true);
+                    break;
 
-                    case UNMARK:
-                        handleMarkUnmark(userInput, tasks, false);
-                        break;
+                case UNMARK:
+                    handleMarkUnmark(userInput, tasks, false);
+                    break;
 
-                    case DELETE:
-                        handleDelete(userInput, tasks);
-                        break;
+                case DELETE:
+                    handleDelete(userInput, tasks);
+                    break;
 
-                    case TODO:
-                    case DEADLINE:
-                    case EVENT:
-                        addTask(userInput, tasks, command);
-                        break;
+                case TODO:
+                case DEADLINE:
+                case EVENT:
+                    addTask(userInput, tasks, command);
+                    break;
 
-                    case UNKNOWN:
-                    default:
-                        throw new HowlyException("I'm sorry, please enter a valid command: todo, deadline, event, list, mark, unmark, delete, or bye.");
+                case UNKNOWN:
+                default:
+                    throw new HowlyException("I'm sorry, please enter a valid command: todo, deadline, event, list, mark, unmark, delete, or bye.");
                 }
             } catch (HowlyException e) {
                 printHorizontalLine();
