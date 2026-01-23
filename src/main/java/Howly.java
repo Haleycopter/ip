@@ -1,19 +1,29 @@
+import java.lang.reflect.Array;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Howly {
+    // Hard-code file name and relative path from project root
+    private static final String FILE_PATH = "./data/howly.txt";
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         printHorizontalLine();
         System.out.println(" Hello! I'm Howly\n What can I do for you?");
         printHorizontalLine();
 
-        ArrayList<Task> tasks = new ArrayList<>();
+        // Load existing tasks from hard disk when chatbot starts up
+        ArrayList<Task> tasks = loadTasks();
 
         while (scanner.hasNextLine()) {
             try {
                 String userInput = scanner.nextLine().trim();
-                if (userInput.isEmpty()) continue;
+                if (userInput.isEmpty()) {
+                    continue;
+                }
 
                 String[] parts = userInput.split(" ", 2);
                 CommandType command = CommandType.fromString(parts[0]);
@@ -49,7 +59,8 @@ public class Howly {
 
                 case UNKNOWN:
                 default:
-                    throw new HowlyException("I'm sorry, please enter a valid command: todo, deadline, event, list, mark, unmark, delete, or bye.");
+                    throw new HowlyException("I'm sorry, please enter a valid command: " +
+                            "todo, deadline, event, list, mark, unmark, delete, or bye.");
                 }
             } catch (HowlyException e) {
                 printHorizontalLine();
@@ -90,13 +101,15 @@ public class Howly {
         } else { // EVENT
             String content = input.replaceFirst("(?i)event", "").trim();
             if (!content.contains("/from") || !content.contains("/to")) {
-                throw new HowlyException("An event must include /from and /to. Eg: event meeting /from Aug 6th 2pm /to 4pm");
+                throw new HowlyException("An event must include /from and /to. " +
+                        "Eg: event meeting /from Aug 6th 2pm /to 4pm");
             }
             String[] parts = content.split("/from|/to");
             newTask = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
         }
 
         tasks.add(newTask);
+        saveTasks(tasks); // Save tasks in hard disk automatically whenever task list changes
         printHorizontalLine();
         System.out.println(" Got it. I've added this task:\n   " + newTask);
         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
@@ -111,14 +124,15 @@ public class Howly {
         if (index < 0 || index >= tasks.size()) throw new HowlyException("Task does not exist.");
 
         Task task = tasks.get(index);
-        printHorizontalLine();
         if (isMark) {
             task.markAsDone();
-            System.out.println(" Nice! I've marked this task as done:");
         } else {
             task.markAsNotDone();
-            System.out.println(" OK, I've marked this task as not done yet:");
         }
+        saveTasks(tasks); // Save after marking or unmarking
+        printHorizontalLine();
+        System.out.println(isMark ? " Nice! I've marked this task as done:" :
+                " OK, I've marked this task as not done yet:");
         System.out.println("   " + task);
         printHorizontalLine();
     }
@@ -131,6 +145,7 @@ public class Howly {
         if (index < 0 || index >= tasks.size()) throw new HowlyException("That task doesn't exist.");
 
         Task removedTask = tasks.remove(index);
+        saveTasks(tasks); // Save after deleting
         printHorizontalLine();
         System.out.println(" Noted. I've removed this task:\n  " + removedTask);
         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
