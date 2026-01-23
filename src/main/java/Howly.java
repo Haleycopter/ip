@@ -1,31 +1,46 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Howly {
+    // Hard-code file name and relative path from project root
+    private static final String FILE_PATH = "data" + File.separator + "howly.txt";
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         printHorizontalLine();
         System.out.println(" Hello! I'm Howly\n What can I do for you?");
         printHorizontalLine();
 
-        ArrayList<Task> tasks = new ArrayList<>();
+        // Load existing tasks from hard disk when chatbot starts up
+        ArrayList<Task> tasks = loadTasks();
 
         while (scanner.hasNextLine()) {
             try {
                 String userInput = scanner.nextLine().trim();
-                if (userInput.isEmpty()) continue;
+                if (userInput.isEmpty()) {
+                    continue;
+                }
 
                 String[] parts = userInput.split(" ", 2);
                 CommandType command = CommandType.fromString(parts[0]);
 
                 switch (command) {
                 case BYE:
+                    if (parts.length > 1 && !parts[1].trim().isEmpty()) {
+                        throw new HowlyException("The 'bye' command should not have any arguments after it.");
+                    }
                     printHorizontalLine();
                     System.out.println(" Bye. Hope to see you again soon!");
                     printHorizontalLine();
                     return;
 
                 case LIST:
+                    if (parts.length > 1 && !parts[1].trim().isEmpty()) {
+                        throw new HowlyException("The 'list' command should not have any arguments after it.");
+                    }
                     printList(tasks);
                     break;
 
@@ -49,7 +64,8 @@ public class Howly {
 
                 case UNKNOWN:
                 default:
-                    throw new HowlyException("I'm sorry, please enter a valid command: todo, deadline, event, list, mark, unmark, delete, or bye.");
+                    throw new HowlyException("I'm sorry, please enter a valid command: " +
+                            "todo, deadline, event, list, mark, unmark, delete, or bye.");
                 }
             } catch (HowlyException e) {
                 printHorizontalLine();
@@ -90,13 +106,15 @@ public class Howly {
         } else { // EVENT
             String content = input.replaceFirst("(?i)event", "").trim();
             if (!content.contains("/from") || !content.contains("/to")) {
-                throw new HowlyException("An event must include /from and /to. Eg: event meeting /from Aug 6th 2pm /to 4pm");
+                throw new HowlyException("An event must include /from and /to. " +
+                        "Eg: event meeting /from Aug 6th 2pm /to 4pm");
             }
             String[] parts = content.split("/from|/to");
             newTask = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
         }
 
         tasks.add(newTask);
+        saveTasks(tasks); // Save tasks in hard disk automatically whenever task list changes
         printHorizontalLine();
         System.out.println(" Got it. I've added this task:\n   " + newTask);
         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
@@ -111,14 +129,15 @@ public class Howly {
         if (index < 0 || index >= tasks.size()) throw new HowlyException("Task does not exist.");
 
         Task task = tasks.get(index);
-        printHorizontalLine();
         if (isMark) {
             task.markAsDone();
-            System.out.println(" Nice! I've marked this task as done:");
         } else {
             task.markAsNotDone();
-            System.out.println(" OK, I've marked this task as not done yet:");
         }
+        saveTasks(tasks); // Save after marking or unmarking
+        printHorizontalLine();
+        System.out.println(isMark ? " Nice! I've marked this task as done:" :
+                " OK, I've marked this task as not done yet:");
         System.out.println("   " + task);
         printHorizontalLine();
     }
@@ -131,6 +150,7 @@ public class Howly {
         if (index < 0 || index >= tasks.size()) throw new HowlyException("That task doesn't exist.");
 
         Task removedTask = tasks.remove(index);
+        saveTasks(tasks); // Save after deleting
         printHorizontalLine();
         System.out.println(" Noted. I've removed this task:\n  " + removedTask);
         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
@@ -139,5 +159,58 @@ public class Howly {
 
     private static void printHorizontalLine() {
         System.out.println("____________________________________________________________");
+    }
+
+    private static void saveTasks(ArrayList<Task> tasks) {
+        try {
+            File f = new File(FILE_PATH);
+            if (!f.getParentFile().exists()) {
+                f.getParentFile().mkdirs();
+            }
+            FileWriter fw = new FileWriter(f);
+            for (Task t : tasks) {
+                fw.write(t.toFileFormat() + System.lineSeparator());
+            }
+            fw.close();
+        } catch (IOException e) {
+            System.out.println(" Error saving tasks: " + e.getMessage());
+        }
+    }
+
+    private static ArrayList<Task> loadTasks() {
+        ArrayList<Task> loadedTasks = new ArrayList<>();
+        File f = new File(FILE_PATH);
+        if (!f.exists()) {
+            return loadedTasks;
+        }
+
+        try (Scanner s = new Scanner(f)) {
+            while (s.hasNext()) {
+                String line = s.nextLine();
+                String[] parts = line.split(" \\| ");
+                Task t;
+                // parts[0] is Type, parts[1] is isDone, parts[2] is task description
+                switch (parts[0]) {
+                case "T":
+                    t = new ToDo(parts[2]);
+                    break;
+                case "D":
+                    t = new Deadline(parts[2], parts[3]);
+                    break;
+                case "E":
+                    t = new Event(parts[2], parts[3], parts[4]);
+                    break;
+                default:
+                    continue;
+                }
+                if (parts[1].equals("1")) {
+                    t.markAsDone();
+                }
+                loadedTasks.add(t);
+            }
+        } catch (IOException | ArrayIndexOutOfBoundsException e) {
+            System.out.println(" Warning: Data file corrupted or unreadable. Starting with fresh list.");
+        }
+        return loadedTasks;
     }
 }
