@@ -9,16 +9,34 @@ import howly.common.TaskList;
 import howly.ui.Ui;
 import howly.storage.Storage;
 import howly.parser.Parser;
-
+/**
+ * Represents a command to add a task to the task list.
+ * This class handles the creation of Todo, Deadline, and Event tasks based on user input.
+ */
 public class AddCommand extends Command {
     private final String input;
     private final CommandType type;
 
+    /**
+     * Constructs an AddCommand with the specified user input and task type.
+     *
+     * @param input The full raw command string provided by the user.
+     * @param type The type of task to be added (TODO, DEADLINE, or EVENT).
+     */
     public AddCommand(String input, CommandType type) {
         this.input = input;
         this.type = type;
     }
 
+    /**
+     * Executes the add command by parsing the input, creating the appropriate task,
+     * adding it to the task list, and saving the updated list to storage.
+     *
+     * @param tasks The list of tasks where the new task will be added.
+     * @param ui The user interface used to display feedback to the user.
+     * @param storage The storage handler used to persist the updated task list.
+     * @throws HowlyException If the user input is invalid or if date parsing fails.
+     */
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
         try {

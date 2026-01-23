@@ -7,7 +7,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import howly.tasks.*;
 import howly.common.HowlyException;
-
+/**
+ * Manages persistent data storage for the Howly application.
+ * This class handles reading tasks from and writing tasks to a local hard disk file,
+ * ensuring that the task list is preserved between application sessions.
+ */
 public class Storage {
     private final String filePath;
 
@@ -15,6 +19,17 @@ public class Storage {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads tasks from the data file.
+     * <p>
+     * If the file does not exist, an empty list is returned. If the file is corrupted
+     * or uses an incorrect format, the method catches the exception and returns
+     * a fresh list to avoid application crashes.
+     * </p>
+     *
+     * @return An {@code ArrayList} of {@code Task} objects reconstructed from the file.
+     * @throws HowlyException If a major error occurs during file access.
+     */
     public ArrayList<Task> load() throws HowlyException {
         ArrayList<Task> loadedTasks = new ArrayList<>();
         File f = new File(filePath);
@@ -52,6 +67,17 @@ public class Storage {
         return loadedTasks;
     }
 
+    /**
+     * Saves the current list of tasks to the data file.
+     * <p>
+     * This method ensures the parent directory exists before writing. It iterates
+     * through the provided task list and converts each task into its machine-readable
+     * file format using {@link Task#toFileFormat()}.
+     * </p>
+     *
+     * @param tasks The {@code ArrayList} of tasks to be persisted to disk.
+     * @throws HowlyException If an I/O error occurs while writing to the file.
+     */
     public void save(ArrayList<Task> tasks) throws HowlyException {
         try {
             File f = new File(filePath);

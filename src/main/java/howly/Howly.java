@@ -8,6 +8,11 @@ import howly.storage.Storage;
 import howly.ui.Ui;
 import java.io.File;
 
+/**
+ * The main class for the Howly chatbot application.
+ * Howly is a task management tool that allows users to track todos, deadlines, and events.
+ * It handles the initialization of core components and manages the main application loop.
+ */
 public class Howly {
     private final Storage storage;
     private final Ui ui;
@@ -24,6 +29,11 @@ public class Howly {
         }
     }
 
+    /**
+     * Starts the main application loop.
+     * Continuously reads user commands, parses them, and executes the corresponding actions
+     * until an exit command is received.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -44,6 +54,12 @@ public class Howly {
         }
     }
 
+    /**
+     * Entry point of the Howly application.
+     * Initializes the app with the default file path and begins the program execution.
+     *
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         new Howly("data" + File.separator + "howly.txt").run();
     }
