@@ -16,6 +16,11 @@ class Deadline extends Task {
     }
 
     @Override
+    public boolean isOnDate(LocalDate date) {
+        return this.by.equals(date);
+    }
+
+    @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: " +
                 by.format(DateTimeFormatter.ofPattern("MMM d yyyy")) +")";

@@ -1,5 +1,5 @@
 public enum CommandType {
-    TODO, DEADLINE, EVENT, LIST, MARK, UNMARK, DELETE, UNKNOWN, BYE;
+    TODO, DEADLINE, EVENT, LIST, MARK, UNMARK, DELETE, UNKNOWN, BYE, FINDDATE;
 
     /**
      * Converts a string to a CommandType safely.

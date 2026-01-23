@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public class Task {
     private final String description;
     private boolean isDone;
@@ -21,6 +23,10 @@ public class Task {
 
     public String toFileFormat() {
         return (isDone? "1" : "0") + " | " + description;
+    }
+
+    public boolean isOnDate(LocalDate date) {
+        return false;
     }
 
     @Override
