@@ -9,6 +9,10 @@ public class FindDateCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
+        String[] parts = input.split(" ");
+        if (parts.length > 2) {
+            throw new HowlyException("The 'finddate' command should only contain a date. Eg: finddate 2026-01-23");
+        }
         LocalDate searchDate = Parser.parseDate(input);
         ui.showLine();
         System.out.println(" Here are the tasks occurring on " +

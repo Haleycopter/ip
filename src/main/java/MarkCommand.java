@@ -9,6 +9,13 @@ public class MarkCommand extends Command {
 
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
+        String[] parts = input.split(" ");
+
+        // Strict validation: check that there are exactly 2 parts
+        if (parts.length != 2) {
+            String cmd = isMark ? "mark" : "unmark";
+            throw new HowlyException("The '" + cmd + "' command expects exactly one task number. Eg: " + cmd + " 2");
+        }
         int index = Parser.parseIndex(input);
         if (index < 0 || index >= tasks.size()) {
             throw new HowlyException("Task does not exist.");

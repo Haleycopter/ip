@@ -1,12 +1,35 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
+/**
+ * Parser deals with making sense of the user command.
+ */
 public class Parser {
-    // Parse the command word from full user input
-    public static CommandType parseCommand(String fullCommand) {
+
+    /**
+     * Parses the full user input and returns the corresponding Command object.
+     *
+     * @param fullCommand input entered by the user.
+     * @return A Command object that can be executed.
+     * @throws HowlyException If the command is unknown or arguments are invalid.
+     */
+    public static Command parse(String fullCommand) throws HowlyException {
         String[] parts = fullCommand.split(" ", 2);
-        return CommandType.fromString(parts[0]);
+        CommandType type = CommandType.fromString(parts[0]);
+
+        return switch (type) {
+            case BYE -> new ExitCommand(fullCommand);
+            case LIST -> new ListCommand(fullCommand);
+            case DELETE -> new DeleteCommand(fullCommand);
+            case MARK -> new MarkCommand(fullCommand, true);
+            case UNMARK -> new MarkCommand(fullCommand, false);
+            case FINDDATE -> new FindDateCommand(fullCommand);
+            case TODO, DEADLINE, EVENT -> new AddCommand(fullCommand, type);
+            default -> throw new HowlyException("I'm sorry, I don't know what that means.");
+        };
     }
+
+    // Helper Parsing Methods, called by the specific Command classes during execution.
 
     // Extract description for a ToDo task
     public static String parseTodo(String input) throws HowlyException {
