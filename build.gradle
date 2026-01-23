@@ -31,6 +31,12 @@ application {
     mainClass.set("howly.Howly")
 }
 
+jar {
+    manifest {
+        attributes('Main-Class': 'howly.Howly')
+    }
+}
+
 shadowJar {
     archiveBaseName = "duke"
     archiveClassifier = null
