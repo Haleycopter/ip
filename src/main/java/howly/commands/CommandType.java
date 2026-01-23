@@ -5,7 +5,7 @@ package howly.commands;
  * which Command object to instantiate.
  */
 public enum CommandType {
-    TODO, DEADLINE, EVENT, LIST, MARK, UNMARK, DELETE, UNKNOWN, BYE, FINDDATE;
+    TODO, DEADLINE, EVENT, LIST, MARK, UNMARK, DELETE, UNKNOWN, BYE, FINDDATE, FIND;
 
     /**
      * Converts a string to a CommandType safely.

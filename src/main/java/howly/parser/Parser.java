@@ -29,6 +29,7 @@ public class Parser {
             case MARK -> new MarkCommand(fullCommand, true);
             case UNMARK -> new MarkCommand(fullCommand, false);
             case FINDDATE -> new FindDateCommand(fullCommand);
+            case FIND -> new FindCommand(fullCommand);
             case TODO, DEADLINE, EVENT -> new AddCommand(fullCommand, type);
             default -> throw new HowlyException("I'm sorry, I don't know what that means.");
         };
