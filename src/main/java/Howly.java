@@ -7,16 +7,16 @@ import java.io.File;
 public class Howly {
     private Storage storage;
     private Ui ui;
-    private ArrayList<Task> tasks;
+    private TaskList tasks;
 
     public Howly(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);
         try {
-            tasks = storage.load();
+            tasks = new TaskList(storage.load());
         } catch (HowlyException e) {
             ui.showError(e.getMessage());
-            tasks = new ArrayList<>();
+            tasks = new TaskList();
         }
     }
 
@@ -81,7 +81,7 @@ public class Howly {
         }
     }
 
-    private void printList(ArrayList<Task> tasks) {
+    private void printList(TaskList tasks) {
         ui.showLine();
         System.out.println(" Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
@@ -124,7 +124,7 @@ public class Howly {
         }
 
         tasks.add(newTask);
-        storage.save(tasks); // Save tasks in hard disk automatically whenever task list changes
+        storage.save(tasks.getTasks()); // Save tasks in hard disk automatically whenever task list changes
         ui.showLine();
         System.out.println(" Got it. I've added this task:\n   " + newTask);
         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
@@ -144,7 +144,7 @@ public class Howly {
         } else {
             task.markAsNotDone();
         }
-        storage.save(tasks); // Save after marking or unmarking
+        storage.save(tasks.getTasks()); // Save after marking or unmarking
         ui.showLine();
         System.out.println(isMark ? " Nice! I've marked this task as done:" :
                 " OK, I've marked this task as not done yet:");
@@ -159,8 +159,8 @@ public class Howly {
         int index = Integer.parseInt(parts[1]) - 1;
         if (index < 0 || index >= tasks.size()) throw new HowlyException("That task doesn't exist.");
 
-        Task removedTask = tasks.remove(index);
-        storage.save(tasks); // Save after deleting
+        Task removedTask = tasks.delete(index);
+        storage.save(tasks.getTasks()); // Save after deleting
         ui.showLine();
         System.out.println(" Noted. I've removed this task:\n  " + removedTask);
         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");

@@ -15,8 +15,8 @@ public class TaskList {
         tasks.add(t);
     }
 
-    public void delete(Task t) {
-        tasks.remove(t);
+    public Task delete(int index) {
+        return tasks.remove(index);
     }
 
     public Task get(int index) {
