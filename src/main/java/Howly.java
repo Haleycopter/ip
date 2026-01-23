@@ -1,8 +1,10 @@
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
 public class Howly {
@@ -55,6 +57,10 @@ public class Howly {
 
                 case DELETE:
                     handleDelete(userInput, tasks);
+                    break;
+
+                case FINDDATE:
+                    handleFindDate(userInput, tasks);
                     break;
 
                 case TODO:
@@ -221,5 +227,31 @@ public class Howly {
             System.out.println(" Warning: Data file corrupted or unreadable. Starting with fresh list.");
         }
         return loadedTasks;
+    }
+
+    private static void handleFindDate(String input, ArrayList<Task> tasks) throws HowlyException {
+        String[] parts = input.split(" ");
+        if (parts.length < 2) {
+            throw new HowlyException("Please specify a date in yyyy-mm-dd format. Eg: finddate 2025-12-31");
+        }
+        try {
+            LocalDate searchDate = LocalDate.parse(parts[1]);
+            printHorizontalLine();
+            System.out.println(" Here are the tasks occurring on " +
+                    searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
+            int count = 0;
+            for (int i = 0; i < tasks.size(); i++) {
+                if (tasks.get(i).isOnDate(searchDate)) {
+                    count++;
+                    System.out.println(" " + count + "." + tasks.get(i));
+                }
+            }
+            if (count == 0) {
+                System.out.println(" No tasks found for this date.");
+            }
+            printHorizontalLine();
+        } catch (DateTimeParseException e) {
+            throw new HowlyException("Please use the date format yyyy-mm-dd for searching.");
+        }
     }
 }
