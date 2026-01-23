@@ -1,43 +1,43 @@
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 
 public class Howly {
-    // Hard-code file name and relative path from project root
-    private static final String FILE_PATH = "data" + File.separator + "howly.txt";
+    private Storage storage;
+    private Ui ui;
+    private ArrayList<Task> tasks;
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        printHorizontalLine();
-        System.out.println(" Hello! I'm Howly\n What can I do for you?");
-        printHorizontalLine();
+    public Howly(String filePath) {
+        this.ui = new Ui();
+        this.storage = new Storage(filePath);
+        try {
+            tasks = storage.load();
+        } catch (HowlyException e) {
+            ui.showError(e.getMessage());
+            tasks = new ArrayList<>();
+        }
+    }
 
-        // Load existing tasks from hard disk when chatbot starts up
-        ArrayList<Task> tasks = loadTasks();
-
-        while (scanner.hasNextLine()) {
+    public void run() {
+        ui.showWelcome();
+        while (true) {
             try {
-                String userInput = scanner.nextLine().trim();
+                String userInput = ui.readCommand().trim();
                 if (userInput.isEmpty()) {
                     continue;
                 }
-
                 String[] parts = userInput.split(" ", 2);
                 CommandType command = CommandType.fromString(parts[0]);
-
-                switch (command) {
+                switch(command) {
                 case BYE:
                     if (parts.length > 1 && !parts[1].trim().isEmpty()) {
                         throw new HowlyException("The 'bye' command should not have any arguments after it.");
                     }
-                    printHorizontalLine();
+                    ui.showLine();
                     System.out.println(" Bye. Hope to see you again soon!");
-                    printHorizontalLine();
+                    ui.showLine();
                     return;
 
                 case LIST:
@@ -48,54 +48,49 @@ public class Howly {
                     break;
 
                 case MARK:
-                    handleMarkUnmark(userInput, tasks, true);
+                    handleMarkUnmark(userInput, true);
                     break;
 
                 case UNMARK:
-                    handleMarkUnmark(userInput, tasks, false);
+                    handleMarkUnmark(userInput, false);
                     break;
 
                 case DELETE:
-                    handleDelete(userInput, tasks);
+                    handleDelete(userInput);
                     break;
 
                 case FINDDATE:
-                    handleFindDate(userInput, tasks);
+                    handleFindDate(userInput);
                     break;
 
                 case TODO:
                 case DEADLINE:
                 case EVENT:
-                    addTask(userInput, tasks, command);
+                    addTask(userInput, command);
                     break;
 
                 case UNKNOWN:
                 default:
-                    throw new HowlyException("I'm sorry, please enter a valid command: " +
-                            "todo, deadline, event, list, mark, unmark, delete, or bye.");
+                    throw new HowlyException("I'm sorry, please enter a valid command.");
                 }
             } catch (HowlyException e) {
-                printHorizontalLine();
-                System.out.println(" Oh no. " + e.getMessage());
-                printHorizontalLine();
+                ui.showError(e.getMessage());
             } catch (NumberFormatException e) {
-                printHorizontalLine();
-                System.out.println(" Please provide a valid task number.");
-                printHorizontalLine();
+                ui.showError("Please provide a valid task number.");
             }
         }
     }
 
-    private static void printList(ArrayList<Task> tasks) {
-        printHorizontalLine();
+    private void printList(ArrayList<Task> tasks) {
+        ui.showLine();
         System.out.println(" Here are the tasks in your list:");
         for (int i = 0; i < tasks.size(); i++) {
             System.out.println(" " + (i + 1) + ". " + tasks.get(i));
         }
-        printHorizontalLine();
+        ui.showLine();
     }
 
-    private static void addTask(String input, ArrayList<Task> tasks, CommandType type) throws HowlyException {
+    private void addTask(String input, CommandType type) throws HowlyException {
         Task newTask;
         if (type == CommandType.TODO) {
             String desc = input.replaceFirst("(?i)todo", "").trim();
@@ -129,14 +124,14 @@ public class Howly {
         }
 
         tasks.add(newTask);
-        saveTasks(tasks); // Save tasks in hard disk automatically whenever task list changes
-        printHorizontalLine();
+        storage.save(tasks); // Save tasks in hard disk automatically whenever task list changes
+        ui.showLine();
         System.out.println(" Got it. I've added this task:\n   " + newTask);
         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-        printHorizontalLine();
+        ui.showLine();
     }
 
-    private static void handleMarkUnmark(String input, ArrayList<Task> tasks, boolean isMark) throws HowlyException {
+    private void handleMarkUnmark(String input, boolean isMark) throws HowlyException {
         String[] parts = input.split(" ");
         if (parts.length < 2) throw new HowlyException("Please specify a task number.");
 
@@ -149,15 +144,15 @@ public class Howly {
         } else {
             task.markAsNotDone();
         }
-        saveTasks(tasks); // Save after marking or unmarking
-        printHorizontalLine();
+        storage.save(tasks); // Save after marking or unmarking
+        ui.showLine();
         System.out.println(isMark ? " Nice! I've marked this task as done:" :
                 " OK, I've marked this task as not done yet:");
         System.out.println("   " + task);
-        printHorizontalLine();
+        ui.showLine();
     }
 
-    private static void handleDelete(String input, ArrayList<Task> tasks) throws HowlyException {
+    private void handleDelete(String input) throws HowlyException {
         String[] parts = input.split(" ");
         if (parts.length < 2) throw new HowlyException("Please specify which task number to delete.");
 
@@ -165,78 +160,21 @@ public class Howly {
         if (index < 0 || index >= tasks.size()) throw new HowlyException("That task doesn't exist.");
 
         Task removedTask = tasks.remove(index);
-        saveTasks(tasks); // Save after deleting
-        printHorizontalLine();
+        storage.save(tasks); // Save after deleting
+        ui.showLine();
         System.out.println(" Noted. I've removed this task:\n  " + removedTask);
         System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-        printHorizontalLine();
+        ui.showLine();
     }
 
-    private static void printHorizontalLine() {
-        System.out.println("____________________________________________________________");
-    }
-
-    private static void saveTasks(ArrayList<Task> tasks) {
-        try {
-            File f = new File(FILE_PATH);
-            if (!f.getParentFile().exists()) {
-                f.getParentFile().mkdirs();
-            }
-            FileWriter fw = new FileWriter(f);
-            for (Task t : tasks) {
-                fw.write(t.toFileFormat() + System.lineSeparator());
-            }
-            fw.close();
-        } catch (IOException e) {
-            System.out.println(" Error saving tasks: " + e.getMessage());
-        }
-    }
-
-    private static ArrayList<Task> loadTasks() {
-        ArrayList<Task> loadedTasks = new ArrayList<>();
-        File f = new File(FILE_PATH);
-        if (!f.exists()) {
-            return loadedTasks;
-        }
-
-        try (Scanner s = new Scanner(f)) {
-            while (s.hasNext()) {
-                String line = s.nextLine();
-                String[] parts = line.split(" \\| ");
-                Task t;
-                // parts[0] is Type, parts[1] is isDone, parts[2] is task description
-                switch (parts[0]) {
-                case "T":
-                    t = new ToDo(parts[2]);
-                    break;
-                case "D":
-                    t = new Deadline(parts[2], parts[3]);
-                    break;
-                case "E":
-                    t = new Event(parts[2], parts[3], parts[4]);
-                    break;
-                default:
-                    continue;
-                }
-                if (parts[1].equals("1")) {
-                    t.markAsDone();
-                }
-                loadedTasks.add(t);
-            }
-        } catch (IOException | ArrayIndexOutOfBoundsException e) {
-            System.out.println(" Warning: Data file corrupted or unreadable. Starting with fresh list.");
-        }
-        return loadedTasks;
-    }
-
-    private static void handleFindDate(String input, ArrayList<Task> tasks) throws HowlyException {
+    private void handleFindDate(String input) throws HowlyException {
         String[] parts = input.split(" ");
         if (parts.length < 2) {
             throw new HowlyException("Please specify a date in yyyy-mm-dd format. Eg: finddate 2025-12-31");
         }
         try {
             LocalDate searchDate = LocalDate.parse(parts[1]);
-            printHorizontalLine();
+            ui.showLine();
             System.out.println(" Here are the tasks occurring on " +
                     searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
             int count = 0;
@@ -249,9 +187,13 @@ public class Howly {
             if (count == 0) {
                 System.out.println(" No tasks found for this date.");
             }
-            printHorizontalLine();
+            ui.showLine();
         } catch (DateTimeParseException e) {
             throw new HowlyException("Please use the date format yyyy-mm-dd for searching.");
         }
+    }
+
+    public static void main(String[] args) {
+        new Howly("data" + File.separator + "howly.txt").run();
     }
 }
