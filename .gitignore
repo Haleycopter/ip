@@ -5,6 +5,7 @@
 data/
 .gradle/
 build/
+*.jar
 
 # Gradle build files
 /.gradle/
