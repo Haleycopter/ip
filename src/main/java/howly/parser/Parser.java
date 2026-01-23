@@ -2,6 +2,7 @@ package howly.parser;
 
 import howly.commands.*;
 import howly.common.HowlyException;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -46,6 +47,7 @@ public class Parser {
 
     /**
      * Parses the input for a deadline task.
+     *
      * @return String array: [description, by]
      */
     public static String[] parseDeadline(String input) throws HowlyException {
@@ -65,6 +67,7 @@ public class Parser {
 
     /**
      * Parses the input for an event task.
+     *
      * @return String array: [description, from, to]
      */
     public static String[] parseEvent(String input) throws HowlyException {

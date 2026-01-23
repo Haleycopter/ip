@@ -5,6 +5,7 @@ public enum CommandType {
 
     /**
      * Converts a string to a CommandType safely.
+     *
      * @param userInput The command word from user input
      * @return The matching Enum or UNKNOWN
      */

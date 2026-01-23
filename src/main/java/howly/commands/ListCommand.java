@@ -7,6 +7,7 @@ import howly.storage.Storage;
 
 public class ListCommand extends Command {
     private final String input;
+
     public ListCommand(String input) {
         this.input = input;
     }

@@ -9,6 +9,7 @@ import howly.parser.Parser;
 
 public class DeleteCommand extends Command {
     private final String input;
+
     public DeleteCommand(String input) {
         this.input = input;
     }
