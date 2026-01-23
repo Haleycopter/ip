@@ -1,3 +1,12 @@
+package howly.commands;
+
+import howly.tasks.Task;
+import howly.common.HowlyException;
+import howly.common.TaskList;
+import howly.ui.Ui;
+import howly.storage.Storage;
+import howly.parser.Parser;
+
 public class DeleteCommand extends Command {
     private final String input;
     public DeleteCommand(String input) {
@@ -7,7 +16,6 @@ public class DeleteCommand extends Command {
     @Override
     public void execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
         String[] parts = input.split(" ");
-        // Ensure no extra text like "crmroi" exists
         if (parts.length > 2) {
             throw new HowlyException("The 'delete' command only accepts a single task number.");
         }

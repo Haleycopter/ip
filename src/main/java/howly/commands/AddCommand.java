@@ -1,3 +1,15 @@
+package howly.commands;
+
+import howly.tasks.Task;
+import howly.tasks.ToDo;
+import howly.tasks.Deadline;
+import howly.tasks.Event;
+import howly.common.HowlyException;
+import howly.common.TaskList;
+import howly.ui.Ui;
+import howly.storage.Storage;
+import howly.parser.Parser;
+
 public class AddCommand extends Command {
     private final String input;
     private final CommandType type;

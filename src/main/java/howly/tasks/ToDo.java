@@ -1,4 +1,6 @@
-class ToDo extends Task {
+package howly.tasks;
+
+public class ToDo extends Task {
     public ToDo(String description) {
         super(description);
     }

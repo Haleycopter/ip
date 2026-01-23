@@ -1,3 +1,5 @@
+package howly.commands;
+
 public enum CommandType {
     TODO, DEADLINE, EVENT, LIST, MARK, UNMARK, DELETE, UNKNOWN, BYE, FINDDATE;
 

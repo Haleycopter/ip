@@ -1,3 +1,11 @@
+package howly;
+
+import howly.commands.Command;
+import howly.common.HowlyException;
+import howly.common.TaskList;
+import howly.parser.Parser;
+import howly.storage.Storage;
+import howly.ui.Ui;
 import java.io.File;
 
 public class Howly {
