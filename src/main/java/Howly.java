@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 
 public class Howly {
     // Hard-code file name and relative path from project root
@@ -99,18 +100,26 @@ public class Howly {
         } else if (type == CommandType.DEADLINE) {
             String content = input.replaceFirst("(?i)deadline", "").trim();
             if (!content.contains("/by")) {
-                throw new HowlyException("A deadline must include /by. Eg: deadline return book /by Sunday");
+                throw new HowlyException("A deadline must include /by. Eg: deadline return book /by 2025-12-31");
             }
             String[] parts = content.split("/by", 2);
-            newTask = new Deadline(parts[0].trim(), parts[1].trim());
-        } else { // EVENT
+            try {
+                newTask = new Deadline(parts[0].trim(), parts[1].trim());
+            } catch (DateTimeParseException e) {
+                throw new HowlyException("Please use the date format yyyy-mm-dd (Eg: 2025-10-15)");
+            }
+        } else { // type == EVENT
             String content = input.replaceFirst("(?i)event", "").trim();
             if (!content.contains("/from") || !content.contains("/to")) {
-                throw new HowlyException("An event must include /from and /to. " +
-                        "Eg: event meeting /from Aug 6th 2pm /to 4pm");
+                throw new HowlyException("An event must include /from and /to." +
+                        "Eg: event meeting /from 2025-10-15 /to 2025-10-16");
             }
             String[] parts = content.split("/from|/to");
-            newTask = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
+            try {
+                newTask = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
+            } catch (DateTimeParseException e) {
+                throw new HowlyException("Please use the date format yyyy-mm-dd after both /from and /to.");
+            }
         }
 
         tasks.add(newTask);
