@@ -27,7 +27,7 @@ public class FindCommand extends Command {
 
         ui.showLine();
         System.out.println(" Here are the matching tasks in your list:");
-        
+
         int count = 0;
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
