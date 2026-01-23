@@ -4,8 +4,8 @@ import java.time.format.DateTimeParseException;
 import java.io.File;
 
 public class Howly {
-    private Storage storage;
-    private Ui ui;
+    private final Storage storage;
+    private final Ui ui;
     private TaskList tasks;
 
     public Howly(String filePath) {
@@ -29,7 +29,7 @@ public class Howly {
                 }
                 String[] parts = userInput.split(" ", 2);
                 CommandType command = CommandType.fromString(parts[0]);
-                switch(command) {
+                switch (command) {
                 case BYE:
                     if (parts.length > 1 && !parts[1].trim().isEmpty()) {
                         throw new HowlyException("The 'bye' command should not have any arguments after it.");
@@ -90,26 +90,19 @@ public class Howly {
     }
 
     private void addTask(String input, CommandType type) throws HowlyException {
-        Task newTask;
         try {
-            switch (type) {
-            case TODO:
-                newTask = new ToDo(Parser.parseTodo(input));
-                break;
-
-            case DEADLINE:
-                String[] dParts = Parser.parseDeadline(input);
-                newTask = new Deadline(dParts[0], dParts[1]);
-                break;
-
-            case EVENT:
-                String[] eParts = Parser.parseEvent(input);
-                newTask = new Event(eParts[0], eParts[1], eParts[2]);
-                break;
-
-            default:
-                throw new HowlyException("Please specify an appropriate command to add: todo, deadline, event");
-            }
+            Task newTask = switch (type) {
+                case TODO -> new ToDo(Parser.parseTodo(input));
+                case DEADLINE -> {
+                    String[] dParts = Parser.parseDeadline(input);
+                    yield new Deadline(dParts[0], dParts[1]);
+                }
+                case EVENT -> {
+                    String[] eParts = Parser.parseEvent(input);
+                    yield new Event(eParts[0], eParts[1], eParts[2]);
+                }
+                default -> throw new HowlyException("Please specify an appropriate command: todo, deadline, event");
+            };
 
             tasks.add(newTask);
             storage.save(tasks.getTasks()); // Save tasks in hard disk automatically whenever task list changes

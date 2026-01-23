@@ -3,7 +3,7 @@ public enum CommandType {
 
     /**
      * Converts a string to a CommandType safely.
-     * @param str The command word from user input
+     * @param userInput The command word from user input
      * @return The matching Enum or UNKNOWN
      */
     public static CommandType fromString(String userInput) {
