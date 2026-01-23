@@ -1,7 +1,6 @@
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
 import java.io.File;
 
 public class Howly {
@@ -92,43 +91,35 @@ public class Howly {
 
     private void addTask(String input, CommandType type) throws HowlyException {
         Task newTask;
-        if (type == CommandType.TODO) {
-            String desc = input.replaceFirst("(?i)todo", "").trim();
-            if (desc.isEmpty()) {
-                throw new HowlyException("You have to specify the task after 'todo'.");
-            }
-            newTask = new ToDo(desc);
-        } else if (type == CommandType.DEADLINE) {
-            String content = input.replaceFirst("(?i)deadline", "").trim();
-            if (!content.contains("/by")) {
-                throw new HowlyException("A deadline must include /by. Eg: deadline return book /by 2025-12-31");
-            }
-            String[] parts = content.split("/by", 2);
-            try {
-                newTask = new Deadline(parts[0].trim(), parts[1].trim());
-            } catch (DateTimeParseException e) {
-                throw new HowlyException("Please use the date format yyyy-mm-dd (Eg: 2025-10-15)");
-            }
-        } else { // type == EVENT
-            String content = input.replaceFirst("(?i)event", "").trim();
-            if (!content.contains("/from") || !content.contains("/to")) {
-                throw new HowlyException("An event must include /from and /to." +
-                        "Eg: event meeting /from 2025-10-15 /to 2025-10-16");
-            }
-            String[] parts = content.split("/from|/to");
-            try {
-                newTask = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
-            } catch (DateTimeParseException e) {
-                throw new HowlyException("Please use the date format yyyy-mm-dd after both /from and /to.");
-            }
-        }
+        try {
+            switch (type) {
+            case TODO:
+                newTask = new ToDo(Parser.parseTodo(input));
+                break;
 
-        tasks.add(newTask);
-        storage.save(tasks.getTasks()); // Save tasks in hard disk automatically whenever task list changes
-        ui.showLine();
-        System.out.println(" Got it. I've added this task:\n   " + newTask);
-        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-        ui.showLine();
+            case DEADLINE:
+                String[] dParts = Parser.parseDeadline(input);
+                newTask = new Deadline(dParts[0], dParts[1]);
+                break;
+
+            case EVENT:
+                String[] eParts = Parser.parseEvent(input);
+                newTask = new Event(eParts[0], eParts[1], eParts[2]);
+                break;
+
+            default:
+                throw new HowlyException("Please specify an appropriate command to add: todo, deadline, event");
+            }
+
+            tasks.add(newTask);
+            storage.save(tasks.getTasks()); // Save tasks in hard disk automatically whenever task list changes
+            ui.showLine();
+            System.out.println(" Got it. I've added this task:\n   " + newTask);
+            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
+            ui.showLine();
+        } catch (java.time.format.DateTimeParseException e) {
+            throw new HowlyException("Please use the date format yyyy-mm-dd.");
+        }
     }
 
     private void handleMarkUnmark(String input, boolean isMark) throws HowlyException {
