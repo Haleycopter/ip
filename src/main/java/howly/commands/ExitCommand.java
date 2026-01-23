@@ -11,6 +11,7 @@ import howly.storage.Storage;
  */
 public class ExitCommand extends Command {
     private final String input;
+
     public ExitCommand(String input) {
         this.input = input;
     }

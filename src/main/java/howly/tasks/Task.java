@@ -47,7 +47,7 @@ public class Task {
      * @return A string representation of the task's status and description.
      */
     public String toFileFormat() {
-        return (isDone? "1" : "0") + " | " + description;
+        return (isDone ? "1" : "0") + " | " + description;
     }
 
     /**
