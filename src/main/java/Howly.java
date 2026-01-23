@@ -1,8 +1,11 @@
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 
 public class Howly {
     // Hard-code file name and relative path from project root
@@ -56,6 +59,10 @@ public class Howly {
                     handleDelete(userInput, tasks);
                     break;
 
+                case FINDDATE:
+                    handleFindDate(userInput, tasks);
+                    break;
+
                 case TODO:
                 case DEADLINE:
                 case EVENT:
@@ -99,18 +106,26 @@ public class Howly {
         } else if (type == CommandType.DEADLINE) {
             String content = input.replaceFirst("(?i)deadline", "").trim();
             if (!content.contains("/by")) {
-                throw new HowlyException("A deadline must include /by. Eg: deadline return book /by Sunday");
+                throw new HowlyException("A deadline must include /by. Eg: deadline return book /by 2025-12-31");
             }
             String[] parts = content.split("/by", 2);
-            newTask = new Deadline(parts[0].trim(), parts[1].trim());
-        } else { // EVENT
+            try {
+                newTask = new Deadline(parts[0].trim(), parts[1].trim());
+            } catch (DateTimeParseException e) {
+                throw new HowlyException("Please use the date format yyyy-mm-dd (Eg: 2025-10-15)");
+            }
+        } else { // type == EVENT
             String content = input.replaceFirst("(?i)event", "").trim();
             if (!content.contains("/from") || !content.contains("/to")) {
-                throw new HowlyException("An event must include /from and /to. " +
-                        "Eg: event meeting /from Aug 6th 2pm /to 4pm");
+                throw new HowlyException("An event must include /from and /to." +
+                        "Eg: event meeting /from 2025-10-15 /to 2025-10-16");
             }
             String[] parts = content.split("/from|/to");
-            newTask = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
+            try {
+                newTask = new Event(parts[0].trim(), parts[1].trim(), parts[2].trim());
+            } catch (DateTimeParseException e) {
+                throw new HowlyException("Please use the date format yyyy-mm-dd after both /from and /to.");
+            }
         }
 
         tasks.add(newTask);
@@ -212,5 +227,31 @@ public class Howly {
             System.out.println(" Warning: Data file corrupted or unreadable. Starting with fresh list.");
         }
         return loadedTasks;
+    }
+
+    private static void handleFindDate(String input, ArrayList<Task> tasks) throws HowlyException {
+        String[] parts = input.split(" ");
+        if (parts.length < 2) {
+            throw new HowlyException("Please specify a date in yyyy-mm-dd format. Eg: finddate 2025-12-31");
+        }
+        try {
+            LocalDate searchDate = LocalDate.parse(parts[1]);
+            printHorizontalLine();
+            System.out.println(" Here are the tasks occurring on " +
+                    searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
+            int count = 0;
+            for (int i = 0; i < tasks.size(); i++) {
+                if (tasks.get(i).isOnDate(searchDate)) {
+                    count++;
+                    System.out.println(" " + count + "." + tasks.get(i));
+                }
+            }
+            if (count == 0) {
+                System.out.println(" No tasks found for this date.");
+            }
+            printHorizontalLine();
+        } catch (DateTimeParseException e) {
+            throw new HowlyException("Please use the date format yyyy-mm-dd for searching.");
+        }
     }
 }
