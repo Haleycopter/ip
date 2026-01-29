@@ -30,6 +30,7 @@ public class Deadline extends Task {
     /**
      * Checks if the deadline of the task occurs on a specific date.
      * * @param date The date to compare against the deadline.
+     *
      * @return <code>true</code> if the deadline matches the specified date, <code>false</code> otherwise.
      */
     @Override

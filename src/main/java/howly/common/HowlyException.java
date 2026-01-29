@@ -1,4 +1,5 @@
 package howly.common;
+
 /**
  * Represents exceptions specific to the Howly chatbot app.
  * Used to handle user input errors and file processing issues.
