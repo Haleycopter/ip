@@ -38,7 +38,7 @@ public class MarkCommand extends Command {
      * @throws HowlyException If the argument count is incorrect or the index is out of bounds.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
         String[] parts = input.split(" ");
 
         // Strict validation: check that there are exactly 2 parts
@@ -59,10 +59,8 @@ public class MarkCommand extends Command {
         }
 
         storage.save(tasks.getTasks());
-        ui.showLine();
-        System.out.println(isMark ? " Nice! I've marked this task as done:"
-                : " OK, I've marked this task as not done yet:");
-        System.out.println("   " + task);
-        ui.showLine();
+        String statusMessage = isMark ? "Nice! I've marked this task as done:"
+                : "OK, I've marked this task as not done yet:";
+        return statusMessage + "\n " + task;
     }
 }

@@ -15,6 +15,8 @@ import howly.ui.Ui;
  * It handles the initialization of core components and manages the main application loop.
  */
 public class Howly {
+    private static final String FILE_PATH = "data" + File.separator + "howly.txt";
+
     private final Storage storage;
     private final Ui ui;
     private TaskList tasks;
@@ -31,6 +33,13 @@ public class Howly {
             ui.showError(e.getMessage());
             tasks = new TaskList();
         }
+    }
+
+    /**
+     * Constructor overload
+     */
+    public Howly() {
+        this(FILE_PATH);
     }
 
     /**
@@ -59,12 +68,27 @@ public class Howly {
     }
 
     /**
+     * Generates a response for the user's chat message.
+     *
+     * @param input The raw user input string.
+     * @return Howly's response as a string.
+     */
+    public String getResponse(String input) {
+        try {
+            Command c = Parser.parse(input);
+            return c.execute(tasks, ui, storage);
+        } catch (HowlyException e) {
+            return e.getMessage();
+        }
+    }
+
+    /**
      * Entry point of the Howly application.
      * Initializes the app with the default file path and begins the program execution.
      *
      * @param args Command line arguments (not used).
      */
     public static void main(String[] args) {
-        new Howly("data" + File.separator + "howly.txt").run();
+        new Howly().run();
     }
 }

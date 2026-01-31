@@ -35,26 +35,26 @@ public class FindDateCommand extends Command {
      * @throws HowlyException If the input format is invalid or the date cannot be parsed.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
         String[] parts = input.split(" ");
         if (parts.length > 2) {
             throw new HowlyException("The 'finddate' command should only contain a date. Eg: finddate 2026-01-23");
         }
         LocalDate searchDate = Parser.parseDate(input);
-        ui.showLine();
-        System.out.println(" Here are the tasks occurring on "
-                + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
+        StringBuilder sb = new StringBuilder("Here are the tasks occurring on "
+                + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":\n");
 
         int count = 0;
         for (int i = 0; i < tasks.size(); i++) {
-            if (tasks.get(i).isOnDate(searchDate)) {
+            Task task = tasks.get(i);
+            if (task.isOnDate(searchDate)) {
                 count++;
-                System.out.println(" " + count + "." + tasks.get(i));
+                sb.append(count).append(".").append(task).append("\n");
             }
         }
         if (count == 0) {
-            System.out.println(" No tasks found for this date.");
+            return "No tasks found for this date.";
         }
-        ui.showLine();
+        return sb.toString().trim();
     }
 }

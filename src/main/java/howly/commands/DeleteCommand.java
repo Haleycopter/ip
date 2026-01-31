@@ -30,7 +30,7 @@ public class DeleteCommand extends Command {
      * @throws HowlyException If the input format is invalid or the task index is out of bounds.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
         String[] parts = input.split(" ");
         if (parts.length > 2) {
             throw new HowlyException("The 'delete' command only accepts a single task number.");
@@ -43,9 +43,7 @@ public class DeleteCommand extends Command {
 
         Task removedTask = tasks.delete(index);
         storage.save(tasks.getTasks());
-        ui.showLine();
-        System.out.println(" Noted. I've removed this task:\n  " + removedTask);
-        System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-        ui.showLine();
+        return "Noted. I've removed this task:\n " + removedTask
+                + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 }

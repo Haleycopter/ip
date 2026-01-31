@@ -39,7 +39,7 @@ public class AddCommand extends Command {
      * @throws HowlyException If the user input is invalid or if date parsing fails.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
         try {
             Task newTask = switch (type) {
             case TODO -> new ToDo(Parser.parseTodo(input));
@@ -56,10 +56,8 @@ public class AddCommand extends Command {
 
             tasks.add(newTask);
             storage.save(tasks.getTasks());
-            ui.showLine();
-            System.out.println(" Got it. I've added this task:\n   " + newTask);
-            System.out.println(" Now you have " + tasks.size() + " tasks in the list.");
-            ui.showLine();
+            return "Got it. I've added this task:\n   " + newTask
+                    + "\nNow you have " + tasks.size() + " tasks in the list.";
         } catch (java.time.format.DateTimeParseException e) {
             throw new HowlyException("Please use the date format yyyy-mm-dd (Eg: 2025-12-31).");
         }

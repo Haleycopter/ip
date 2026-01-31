@@ -1,0 +1,67 @@
+.root {
+    main-color: rgb(237, 255, 242);
+    -fx-background-color: main-color;
+    -fx-background-image: url("../images/flower.png"); /* Set image */
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.text-field {
+    -fx-background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+    -fx-background-radius: 10;
+    -fx-border-color: #B8860B; /* Dark golden border */
+    -fx-border-radius: 10;
+    -fx-padding: 8px;
+    -fx-font-family: "Times New Roman";
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+.text-field:focused {
+    -fx-border-color: #FFD700; /* Brighter gold when active */
+    -fx-border-width: 2px;
+}
+
+.button {
+    -fx-background-color: #DAA520; /* Golden rod color */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #FFD700;
+    -fx-text-fill: #333333;
+}
+
+.button:pressed {
+    -fx-background-color: #FFA500;
+    -fx-font-size: 15px;
+}
+
+.scroll-pane {
+    -fx-background-color: rgba(0, 0, 0, 0.3);
+}
+
+.scroll-pane .viewport, #dialogContainer {
+    -fx-background-color: transparent;
+}
+
+.scroll-bar {
+    -fx-font-size: 10px;  /* Change width of scroll bar. */
+    -fx-background-color: main-color;
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: #DAA520;
+    -fx-background-radius: 1em;
+}
+
+/* Hides the increment and decrement buttons. */
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-pref-height: 0;
+    -fx-opacity: 0;
+}
