@@ -11,17 +11,19 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * App runs Main.java to start up GUI
+ */
 public class Main extends Application {
-
     private ScrollPane scrollPane;
     private VBox dialogContainer;
     private TextField userInput;
     private Button sendButton;
     private Scene scene;
 
-    // Load your images from src/main/resources/images/
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/calcifer.png"));
     private Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/howl.png"));
+    private Howly howly = new Howly();
 
     @Override
     public void start(Stage stage) {
@@ -72,5 +74,29 @@ public class Main extends Application {
         // Add a sample dialog to see it working
         dialogContainer.getChildren().addAll(new DialogBox(welcomeMsg, dukeImage));
         stage.show();
+
+        sendButton.setOnMouseClicked((event) -> {
+            handleUserInput();
+        });
+
+        userInput.setOnAction((event) -> {
+            handleUserInput();
+        });
+
+        dialogContainer.heightProperty().addListener((observable) -> scrollPane.setVvalue(1.0));
+    }
+
+    /**
+     * Processes user input, creates dialog boxes, and clears the text field.
+     */
+    private void handleUserInput() {
+        String userText = userInput.getText();
+        String howlyResponse = howly.getResponse(userText); // Process the actual command
+
+        dialogContainer.getChildren().addAll(
+                DialogBox.getUserDialog(userText, userImage),
+                DialogBox.getHowlyDialog(howlyResponse, dukeImage)
+        );
+        userInput.clear();
     }
 }
