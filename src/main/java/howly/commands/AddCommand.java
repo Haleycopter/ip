@@ -56,8 +56,11 @@ public class AddCommand extends Command {
 
             tasks.add(newTask);
             storage.save(tasks.getTasks());
-            return "Got it. I've added this task:\n   " + newTask
-                    + "\nNow you have " + tasks.size() + " tasks in the list.";
+            return ui.formatMessages(
+                    "Got it. I've added this task:",
+                    "  " + newTask,
+                    "Now you have " + tasks.size() + " tasks in the list."
+            );
         } catch (java.time.format.DateTimeParseException e) {
             throw new HowlyException("Please use the date format yyyy-mm-dd (Eg: 2025-12-31).");
         }
