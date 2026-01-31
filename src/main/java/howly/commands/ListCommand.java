@@ -31,18 +31,21 @@ public class ListCommand extends Command {
      * @throws HowlyException If there are trailing arguments after the 'list' command.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
         // Split to check if there is anything after "list"
         String[] parts = input.split(" ", 2);
         if (parts.length > 1 && !parts[1].trim().isEmpty()) {
             throw new HowlyException("The 'list' command should not have any arguments after it.");
         }
 
-        ui.showLine();
-        System.out.println(" Here are the tasks in your list:");
-        for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(" " + (i + 1) + ". " + tasks.get(i));
+        if (tasks.size() == 0) {
+            return "Your task list is currently empty.";
         }
-        ui.showLine();
+
+        StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
+        for (int i = 0; i < tasks.size(); i++) {
+            sb.append(i + 1).append(". ").append(tasks.get(i)).append("\n");
+        }
+        return sb.toString().trim();
     }
 }

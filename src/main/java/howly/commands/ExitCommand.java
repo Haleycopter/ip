@@ -27,15 +27,13 @@ public class ExitCommand extends Command {
      * @throws HowlyException If there are trailing arguments after the 'bye' command.
      */
     @Override
-    public void execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
+    public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
         // Check if there is anything after the word "bye"
         String[] parts = input.split(" ", 2);
         if (parts.length > 1 && !parts[1].trim().isEmpty()) {
             throw new HowlyException("The 'bye' command should not have any arguments after it.");
         }
-        ui.showLine();
-        System.out.println(" Bye. Hope to see you again soon!");
-        ui.showLine();
+        return "Bye. Hope to see you again soon!";
     }
 
     /**

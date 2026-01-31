@@ -18,7 +18,7 @@ public abstract class Command {
      * @param storage The storage system used to save or load task data.
      * @throws HowlyException If an error occurs during the command execution.
      */
-    public abstract void execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException;
+    public abstract String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException;
 
     /**
      * Indicates whether this command should terminate the application's main loop.
