@@ -53,12 +53,16 @@ public class Ui {
     }
 
     /**
-     * Prints multiple messages to the console, each separated by a newline.
-     * @param messages The variable number of message strings to print.
+     * Combines multiple messages into a single string separated by newlines.
+     *
+     * @param messages The variable number of messages to combine.
+     * @return A single formatted string containing all messages.
      */
-    public void showMessages(String... messages) {
+    public String formatMessages(String... messages) {
+        StringBuilder sb = new StringBuilder();
         for (String m : messages) {
-            System.out.println(" " + m);
+            sb.append(m).append("\n");
         }
+        return sb.toString().trim(); // Trim to remove the final trailing newline
     }
 }
