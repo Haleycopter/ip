@@ -21,6 +21,9 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+            stage.setResizable(false);
+            stage.setMinHeight(600.0);
+            stage.setMinWidth(400.0);
             fxmlLoader.<MainWindow>getController().setHowly(howly); // Inject the Howly instance
             stage.show();
         } catch (IOException e) {
