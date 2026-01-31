@@ -2,8 +2,9 @@ package howly.commands;
 
 import howly.common.HowlyException;
 import howly.common.TaskList;
-import howly.ui.Ui;
 import howly.storage.Storage;
+import howly.ui.Ui;
+
 /**
  * Represents a command to display all tasks currently in the task list.
  * This class ensures the command is used without extra arguments and iterates

@@ -1,10 +1,12 @@
 package howly;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
-import howly.parser.Parser;
+
+import org.junit.jupiter.api.Test;
+
 import howly.common.HowlyException;
+import howly.parser.Parser;
 
 public class ParserTest {
     @Test

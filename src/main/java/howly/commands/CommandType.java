@@ -1,4 +1,5 @@
 package howly.commands;
+
 /**
  * Represents the various types of commands that the Howly chatbot can execute.
  * This enum is used by the Parser to categorize user input and determine

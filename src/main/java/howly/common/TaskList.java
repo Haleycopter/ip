@@ -1,8 +1,9 @@
 package howly.common;
 
+import java.util.ArrayList;
+
 import howly.tasks.Task;
 
-import java.util.ArrayList;
 /**
  * Encapsulates the list of tasks and provides operations to manipulate the list.
  */

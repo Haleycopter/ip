@@ -1,10 +1,10 @@
 package howly.commands;
 
-import howly.tasks.Task;
 import howly.common.HowlyException;
 import howly.common.TaskList;
-import howly.ui.Ui;
 import howly.storage.Storage;
+import howly.tasks.Task;
+import howly.ui.Ui;
 
 /**
  * Represents a command to search for tasks that contain a specific keyword.

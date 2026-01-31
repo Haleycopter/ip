@@ -1,11 +1,12 @@
 package howly.commands;
 
-import howly.tasks.Task;
 import howly.common.HowlyException;
 import howly.common.TaskList;
-import howly.ui.Ui;
-import howly.storage.Storage;
 import howly.parser.Parser;
+import howly.storage.Storage;
+import howly.tasks.Task;
+import howly.ui.Ui;
+
 /**
  * Represents a command to change the completion status of a task in the list.
  * This class can either mark a task as completed or revert it to a not-done state.
@@ -14,6 +15,10 @@ public class MarkCommand extends Command {
     private final String input;
     private final boolean isMark;
 
+    /**
+     * @param input The full command string provided by the user (e.g., "mark 1").
+     * @param isMark A boolean indicating if the task should be marked as done (true) or undone (false).
+     */
     public MarkCommand(String input, boolean isMark) {
         this.input = input;
         this.isMark = isMark;
@@ -55,8 +60,8 @@ public class MarkCommand extends Command {
 
         storage.save(tasks.getTasks());
         ui.showLine();
-        System.out.println(isMark ? " Nice! I've marked this task as done:" :
-                " OK, I've marked this task as not done yet:");
+        System.out.println(isMark ? " Nice! I've marked this task as done:"
+                : " OK, I've marked this task as not done yet:");
         System.out.println("   " + task);
         ui.showLine();
     }

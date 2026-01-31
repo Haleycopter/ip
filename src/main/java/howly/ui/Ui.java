@@ -8,8 +8,9 @@ import java.util.Scanner;
  * errors, and formatting lines to the console.
  */
 public class Ui {
-    private final Scanner scanner;
     private static final String LINE = "____________________________________________________________";
+
+    private final Scanner scanner;
 
     public Ui() {
         this.scanner = new Scanner(System.in);
@@ -33,7 +34,8 @@ public class Ui {
 
     /**
      * Reads a full line of command input from the user.
-     * * @return The raw input string entered by the user.
+     *
+     * @return The raw input string entered by the user.
      */
     public String readCommand() {
         return scanner.nextLine();
@@ -41,7 +43,8 @@ public class Ui {
 
     /**
      * Displays a formatted error message to the user.
-     * * @param message The specific error message to be displayed.
+     *
+     * @param message The specific error message to be displayed.
      */
     public void showError(String message) {
         showLine();

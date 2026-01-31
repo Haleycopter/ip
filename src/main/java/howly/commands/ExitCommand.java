@@ -2,8 +2,9 @@ package howly.commands;
 
 import howly.common.HowlyException;
 import howly.common.TaskList;
-import howly.ui.Ui;
 import howly.storage.Storage;
+import howly.ui.Ui;
+
 /**
  * Represents a command to terminate the Howly application.
  * This class handles the validation of the exit command to ensure no extra
