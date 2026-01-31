@@ -51,4 +51,14 @@ public class Ui {
         System.out.println(" Oh no. " + message);
         showLine();
     }
+
+    /**
+     * Prints multiple messages to the console, each separated by a newline.
+     * @param messages The variable number of message strings to print.
+     */
+    public void showMessages(String... messages) {
+        for (String m : messages) {
+            System.out.println(" " + m);
+        }
+    }
 }
