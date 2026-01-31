@@ -11,6 +11,9 @@ public class Task {
     private final String description;
     private boolean isDone;
 
+    /**
+     * @param description The text describing the task to be performed.
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;

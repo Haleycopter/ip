@@ -1,13 +1,13 @@
 package howly;
 
+import java.io.File;
+
 import howly.commands.Command;
 import howly.common.HowlyException;
 import howly.common.TaskList;
 import howly.parser.Parser;
 import howly.storage.Storage;
 import howly.ui.Ui;
-
-import java.io.File;
 
 /**
  * The main class for the Howly chatbot application.
@@ -19,6 +19,9 @@ public class Howly {
     private final Ui ui;
     private TaskList tasks;
 
+    /**
+     * @param filePath The path to the file where task data is stored (e.g., "data/howly.txt").
+     */
     public Howly(String filePath) {
         this.ui = new Ui();
         this.storage = new Storage(filePath);

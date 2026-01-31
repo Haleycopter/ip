@@ -1,14 +1,15 @@
 package howly.commands;
 
-import howly.tasks.*;
-import howly.ui.Ui;
-import howly.storage.Storage;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import howly.common.HowlyException;
 import howly.common.TaskList;
 import howly.parser.Parser;
+import howly.storage.Storage;
+import howly.tasks.Task;
+import howly.ui.Ui;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 /**
  * Represents a command to search for and display tasks that occur on a specific date.
  * This class handles date parsing and iterates through the task list to find matches.
@@ -41,8 +42,8 @@ public class FindDateCommand extends Command {
         }
         LocalDate searchDate = Parser.parseDate(input);
         ui.showLine();
-        System.out.println(" Here are the tasks occurring on " +
-                searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
+        System.out.println(" Here are the tasks occurring on "
+                + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":");
 
         int count = 0;
         for (int i = 0; i < tasks.size(); i++) {

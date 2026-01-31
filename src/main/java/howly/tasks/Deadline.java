@@ -11,6 +11,10 @@ import java.time.format.DateTimeFormatter;
 public class Deadline extends Task {
     private final LocalDate by;
 
+    /**
+     * @param description The text describing the task to be performed.
+     * @param by The date by which the task should be completed, in yyyy-mm-dd format.
+     */
     public Deadline(String description, String by) {
         super(description);
         // Assume input dates in the format yyyy-mm-dd
@@ -20,7 +24,7 @@ public class Deadline extends Task {
     /**
      * Returns the machine-readable data format of the deadline task for storage.
      * The format used is "D | [status] | [description] | [date]".
-     * * @return A string formatted for saving to a file.
+     * @return A string formatted for saving to a file.
      */
     @Override
     public String toFileFormat() {
@@ -29,7 +33,7 @@ public class Deadline extends Task {
 
     /**
      * Checks if the deadline of the task occurs on a specific date.
-     * * @param date The date to compare against the deadline.
+     * @param date The date to compare against the deadline.
      *
      * @return <code>true</code> if the deadline matches the specified date, <code>false</code> otherwise.
      */
@@ -41,11 +45,11 @@ public class Deadline extends Task {
     /**
      * Returns a string representation of the deadline task, including its type icon,
      * status icon, description, and formatted deadline date.
-     * * @return A user-friendly string representation of the deadline.
+     * @return A user-friendly string representation of the deadline.
      */
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " +
-                by.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
+        return "[D]" + super.toString() + " (by: "
+                + by.format(DateTimeFormatter.ofPattern("MMM d yyyy")) + ")";
     }
 }

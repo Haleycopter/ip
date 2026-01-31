@@ -12,6 +12,11 @@ public class Event extends Task {
     private final LocalDate from;
     private final LocalDate to;
 
+    /**
+     * @param description The text describing the task to be performed.
+     * @param from The start date of the event in yyyy-mm-dd format.
+     * @param to The end date of the event in yyyy-mm-dd format.
+     */
     public Event(String description, String from, String to) {
         super(description);
         this.from = LocalDate.parse(from);
@@ -21,7 +26,8 @@ public class Event extends Task {
     /**
      * Returns the machine-readable data format of the event task for storage.
      * The format used is "E | [status] | [description] | [from] | [to]".
-     * * @return A string formatted for saving to a file.
+     *
+     * @return A string formatted for saving to a file.
      */
     @Override
     public String toFileFormat() {
@@ -30,9 +36,9 @@ public class Event extends Task {
 
     /**
      * Checks if the event occurs on or spans across a specific date.
-     * * @param date The date to check against the event's duration.
-     * @return <code>true</code> if the date is the start, end, or between the range;
-     * <code>false</code> otherwise.
+     *
+     * @param date The date to check against the event's duration.
+     * @return true if the date is the start, end, or between the range
      */
     @Override
     public boolean isOnDate(LocalDate date) {
@@ -43,7 +49,8 @@ public class Event extends Task {
     /**
      * Returns a string representation of the event task, including its type icon,
      * status icon, description, and formatted date range.
-     * * @return A user-friendly string representation of the event.
+     *
+     * @return A user-friendly string representation of the event.
      */
     @Override
     public String toString() {

@@ -6,8 +6,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import howly.tasks.*;
 import howly.common.HowlyException;
+import howly.tasks.Deadline;
+import howly.tasks.Event;
+import howly.tasks.Task;
+import howly.tasks.ToDo;
+
 /**
  * Manages persistent data storage for the Howly application.
  * This class handles reading tasks from and writing tasks to a local hard disk file,

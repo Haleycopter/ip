@@ -1,10 +1,18 @@
 package howly.parser;
 
-import howly.commands.*;
-import howly.common.HowlyException;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+
+import howly.commands.AddCommand;
+import howly.commands.Command;
+import howly.commands.CommandType;
+import howly.commands.DeleteCommand;
+import howly.commands.ExitCommand;
+import howly.commands.FindCommand;
+import howly.commands.FindDateCommand;
+import howly.commands.ListCommand;
+import howly.commands.MarkCommand;
+import howly.common.HowlyException;
 
 /**
  * Handles the logic for interpreting user input strings and converting them into
@@ -27,15 +35,15 @@ public class Parser {
         CommandType type = CommandType.fromString(parts[0]);
 
         return switch (type) {
-            case BYE -> new ExitCommand(fullCommand);
-            case LIST -> new ListCommand(fullCommand);
-            case DELETE -> new DeleteCommand(fullCommand);
-            case MARK -> new MarkCommand(fullCommand, true);
-            case UNMARK -> new MarkCommand(fullCommand, false);
-            case FINDDATE -> new FindDateCommand(fullCommand);
-            case FIND -> new FindCommand(fullCommand);
-            case TODO, DEADLINE, EVENT -> new AddCommand(fullCommand, type);
-            default -> throw new HowlyException("I'm sorry, I don't know what that means.");
+        case BYE -> new ExitCommand(fullCommand);
+        case LIST -> new ListCommand(fullCommand);
+        case DELETE -> new DeleteCommand(fullCommand);
+        case MARK -> new MarkCommand(fullCommand, true);
+        case UNMARK -> new MarkCommand(fullCommand, false);
+        case FINDDATE -> new FindDateCommand(fullCommand);
+        case FIND -> new FindCommand(fullCommand);
+        case TODO, DEADLINE, EVENT -> new AddCommand(fullCommand, type);
+        default -> throw new HowlyException("I'm sorry, I don't know what that means.");
         };
     }
 
@@ -89,13 +97,14 @@ public class Parser {
     public static String[] parseEvent(String input) throws HowlyException {
         String content = input.replaceFirst("(?i)event", "").trim();
         if (!content.contains("/from") || !content.contains("/to")) {
-            throw new HowlyException("An event must include /from and /to. Eg: event meeting /from 2025-10-15 /to 2025-10-16");
+            throw new HowlyException("An event must include /from and /to. "
+                    + "Eg: event meeting /from 2025-10-15 /to 2025-10-16");
         }
 
         // Split by /from and /to. Using regex to handle both.
         String[] parts = content.split("/from|/to");
-        if (parts.length < 3 || parts[0].trim().isEmpty() ||
-                parts[1].trim().isEmpty() || parts[2].trim().isEmpty()) {
+        if (parts.length < 3 || parts[0].trim().isEmpty()
+                || parts[1].trim().isEmpty() || parts[2].trim().isEmpty()) {
             throw new HowlyException("Event description, /from, and /to fields cannot be empty.");
         }
         return new String[]{parts[0].trim(), parts[1].trim(), parts[2].trim()};

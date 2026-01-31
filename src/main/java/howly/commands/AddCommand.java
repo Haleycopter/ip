@@ -1,14 +1,15 @@
 package howly.commands;
 
-import howly.tasks.Task;
-import howly.tasks.ToDo;
-import howly.tasks.Deadline;
-import howly.tasks.Event;
 import howly.common.HowlyException;
 import howly.common.TaskList;
-import howly.ui.Ui;
-import howly.storage.Storage;
 import howly.parser.Parser;
+import howly.storage.Storage;
+import howly.tasks.Deadline;
+import howly.tasks.Event;
+import howly.tasks.Task;
+import howly.tasks.ToDo;
+import howly.ui.Ui;
+
 /**
  * Represents a command to add a task to the task list.
  * This class handles the creation of Todo, Deadline, and Event tasks based on user input.
@@ -41,16 +42,16 @@ public class AddCommand extends Command {
     public void execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
         try {
             Task newTask = switch (type) {
-                case TODO -> new ToDo(Parser.parseTodo(input));
-                case DEADLINE -> {
-                    String[] dParts = Parser.parseDeadline(input);
-                    yield new Deadline(dParts[0], dParts[1]);
-                }
-                case EVENT -> {
-                    String[] eParts = Parser.parseEvent(input);
-                    yield new Event(eParts[0], eParts[1], eParts[2]);
-                }
-                default -> throw new HowlyException("Please specify an appropriate command: todo, deadline, event");
+            case TODO -> new ToDo(Parser.parseTodo(input));
+            case DEADLINE -> {
+                String[] dParts = Parser.parseDeadline(input);
+                yield new Deadline(dParts[0], dParts[1]);
+            }
+            case EVENT -> {
+                String[] eParts = Parser.parseEvent(input);
+                yield new Event(eParts[0], eParts[1], eParts[2]);
+            }
+            default -> throw new HowlyException("Please specify an appropriate command: todo, deadline, event");
             };
 
             tasks.add(newTask);
