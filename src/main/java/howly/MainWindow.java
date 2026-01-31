@@ -61,4 +61,12 @@ public class MainWindow extends AnchorPane {
         );
         userInput.clear();
     }
+
+    /**
+     * Adds multiple dialog boxes to the container at once.
+     * @param containers The DialogBox nodes to be added.
+     */
+    public void addDialogs(DialogBox... containers) {
+        dialogContainer.getChildren().addAll(containers);
+    }
 }
