@@ -1,5 +1,9 @@
 package howly.commands;
 
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import howly.common.HowlyException;
 import howly.common.TaskList;
 import howly.storage.Storage;
@@ -19,16 +23,21 @@ public class FindCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
-        StringBuilder sb = new StringBuilder("Here are the matching tasks in your list:\n");
-        int count = 0;
+        List<Task> matchingTasks = tasks.getTasks().stream()
+                .filter(t -> t.toString().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
 
-        for (int i = 0; i < tasks.size(); i++) {
-            Task task = tasks.get(i);
-            if (task.toString().contains(keyword)) {
-                count++;
-                sb.append(count).append(".").append(task).append("\n");
-            }
+        if (matchingTasks.isEmpty()) {
+            return "No matching tasks found for: " + keyword;
         }
-        return count == 0 ? "No matching tasks found for: " + keyword : sb.toString().trim();
+
+        if (matchingTasks.isEmpty()) {
+            return "No matching tasks found for: " + keyword;
+        }
+        String results = IntStream.range(0, matchingTasks.size())
+                .mapToObj(i -> (i + 1) + "." + matchingTasks.get(i))
+                .collect(Collectors.joining("\n"));
+
+        return "Here are the matching tasks in your list:\n" + results;
     }
 }
