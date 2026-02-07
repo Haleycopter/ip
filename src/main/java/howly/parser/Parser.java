@@ -124,7 +124,9 @@ public class Parser {
             if (parts.length < 2) {
                 throw new HowlyException("Please specify a task number.");
             }
-            return Integer.parseInt(parts[1]) - 1;
+            int index = Integer.parseInt(parts[1]) - 1;
+            assert index >= 0 : "Parsed task index should be non-negative";
+            return index;
         } catch (NumberFormatException e) {
             throw new HowlyException("Please provide a valid task number.");
         }

@@ -56,7 +56,8 @@ jar {
 
 shadowJar {
     archiveBaseName = "howly"
-    archiveClassifier = null
+    archiveClassifier.set('')
+    archiveVersion.set('0.1.0')
 }
 
 run{

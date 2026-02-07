@@ -32,6 +32,8 @@ public class TaskList {
      * @return The task that was removed from the list.
      */
     public Task delete(int index) {
+        assert index >= 0 : "Index to delete cannot be negative";
+        assert index < tasks.size() : "Index to delete is out of bounds";
         return tasks.remove(index);
     }
 
