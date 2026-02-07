@@ -11,12 +11,6 @@ import howly.ui.Ui;
  * through the list to print each task.
  */
 public class ListCommand extends Command {
-    private final String input;
-
-    public ListCommand(String input) {
-        this.input = input;
-    }
-
     /**
      * Executes the list command by verifying the input format and printing
      * all tasks in the current list to the user interface.
@@ -32,16 +26,9 @@ public class ListCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
-        // Split to check if there is anything after "list"
-        String[] parts = input.split(" ", 2);
-        if (parts.length > 1 && !parts[1].trim().isEmpty()) {
-            throw new HowlyException("The 'list' command should not have any arguments after it.");
-        }
-
         if (tasks.size() == 0) {
             return "Your task list is currently empty.";
         }
-
         StringBuilder sb = new StringBuilder("Here are the tasks in your list:\n");
         for (int i = 0; i < tasks.size(); i++) {
             sb.append(i + 1).append(". ").append(tasks.get(i)).append("\n");

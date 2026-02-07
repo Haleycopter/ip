@@ -2,7 +2,6 @@ package howly.commands;
 
 import howly.common.HowlyException;
 import howly.common.TaskList;
-import howly.parser.Parser;
 import howly.storage.Storage;
 import howly.tasks.Task;
 import howly.ui.Ui;
@@ -12,15 +11,15 @@ import howly.ui.Ui;
  * This class can either mark a task as completed or revert it to a not-done state.
  */
 public class MarkCommand extends Command {
-    private final String input;
+    private final int targetIndex;
     private final boolean isMark;
 
     /**
-     * @param input The full command string provided by the user (e.g., "mark 1").
+     * @param index The full command string provided by the user (e.g., "mark 1").
      * @param isMark A boolean indicating if the task should be marked as done (true) or undone (false).
      */
-    public MarkCommand(String input, boolean isMark) {
-        this.input = input;
+    public MarkCommand(int index, boolean isMark) {
+        this.targetIndex = index;
         this.isMark = isMark;
     }
 
@@ -39,28 +38,21 @@ public class MarkCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
-        String[] parts = input.split(" ");
+        assert targetIndex >= 0 : "Target index should be non-negative"; // Incorporating A-Assertions
 
-        // Strict validation: check that there are exactly 2 parts
-        if (parts.length != 2) {
-            String cmd = isMark ? "mark" : "unmark";
-            throw new HowlyException("The '" + cmd + "' command expects exactly one task number. Eg: " + cmd + " 2");
-        }
-        int index = Parser.parseIndex(input);
-        if (index < 0 || index >= tasks.size()) {
-            throw new HowlyException("Task does not exist.");
+        if (targetIndex >= tasks.size()) {
+            throw new HowlyException("Task index " + (targetIndex + 1) + " does not exist.");
         }
 
-        Task task = tasks.get(index);
+        Task task = tasks.get(targetIndex);
         if (isMark) {
             task.markAsDone();
+            storage.save(tasks.getTasks());
+            return "Nice! I've marked this task as done:\n  " + task;
         } else {
             task.markAsNotDone();
+            storage.save(tasks.getTasks());
+            return "OK, I've marked this task as not done yet:\n  " + task;
         }
-
-        storage.save(tasks.getTasks());
-        String statusMessage = isMark ? "Nice! I've marked this task as done:"
-                : "OK, I've marked this task as not done yet:";
-        return statusMessage + "\n " + task;
     }
 }
