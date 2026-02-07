@@ -46,12 +46,6 @@ public class Event extends Task {
         return (date.isEqual(from) || date.isEqual(to)) || (date.isAfter(from) && date.isBefore(to));
     }
 
-    /**
-     * Returns a string representation of the event task, including its type icon,
-     * status icon, description, and formatted date range.
-     *
-     * @return A user-friendly string representation of the event.
-     */
     @Override
     public String toString() {
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MMM d yyyy");

@@ -20,12 +20,6 @@ public class ToDo extends Task {
         return "T | " + super.toFileFormat();
     }
 
-    /**
-     * Returns a string representation of the todo task, including its type icon,
-     * status icon, and description.
-     *
-     * @return A user-friendly string representation of the todo.
-     */
     @Override
     public String toString() {
         return "[T]" + super.toString();

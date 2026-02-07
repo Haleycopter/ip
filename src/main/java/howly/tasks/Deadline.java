@@ -42,11 +42,6 @@ public class Deadline extends Task {
         return this.by.equals(date);
     }
 
-    /**
-     * Returns a string representation of the deadline task, including its type icon,
-     * status icon, description, and formatted deadline date.
-     * @return A user-friendly string representation of the deadline.
-     */
     @Override
     public String toString() {
         return "[D]" + super.toString() + " (by: "
