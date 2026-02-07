@@ -23,7 +23,16 @@ public class UpdateCommand extends Command {
         this.index = index;
         this.newDescription = newDescription;
     }
-
+    /**
+     * Executes the update command by replacing the description of the task at the given index.
+     * The changes are immediately persisted to the storage file.
+     *
+     * @param tasks The {@code TaskList} containing the tasks to be updated.
+     * @param ui The {@code Ui} used for user interaction.
+     * @param storage The {@code Storage} used for task persistence.
+     * @return A confirmation message showing the transition from the old to the new description.
+     * @throws HowlyException If the provided index is out of bounds for the current task list.
+     */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
         if (index < 0 || index >= tasks.size()) {
