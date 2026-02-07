@@ -23,22 +23,17 @@ public class FindCommand extends Command {
 
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
-        // Legacy parsing needed because this branch doesn't have SLAP refactor yet
-        String[] parts = keyword.split(" ", 2);
-        if (parts.length < 2 || parts[1].trim().isEmpty()) {
-            throw new HowlyException("The 'find' command requires a keyword.");
-        }
-        String keyword = parts[1].trim();
-
-        // Stream logic
         List<Task> matchingTasks = tasks.getTasks().stream()
                 .filter(t -> t.toString().toLowerCase().contains(keyword.toLowerCase()))
-                .toList();
+                .collect(Collectors.toList());
 
         if (matchingTasks.isEmpty()) {
             return "No matching tasks found for: " + keyword;
         }
 
+        if (matchingTasks.isEmpty()) {
+            return "No matching tasks found for: " + keyword;
+        }
         String results = IntStream.range(0, matchingTasks.size())
                 .mapToObj(i -> (i + 1) + "." + matchingTasks.get(i))
                 .collect(Collectors.joining("\n"));

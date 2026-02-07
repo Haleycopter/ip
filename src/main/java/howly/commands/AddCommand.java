@@ -15,17 +15,17 @@ import howly.ui.Ui;
  * This class handles the creation of Todo, Deadline, and Event tasks based on user input.
  */
 public class AddCommand extends Command {
-    private final String input;
+    private final String arguments;
     private final CommandType type;
 
     /**
      * Constructs an AddCommand with the specified user input and task type.
      *
-     * @param input The full raw command string provided by the user.
+     * @param arguments The full raw command string provided by the user.
      * @param type The type of task to be added (TODO, DEADLINE, or EVENT).
      */
-    public AddCommand(String input, CommandType type) {
-        this.input = input;
+    public AddCommand(String arguments, CommandType type) {
+        this.arguments = arguments;
         this.type = type;
     }
 
@@ -42,16 +42,16 @@ public class AddCommand extends Command {
     public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
         try {
             Task newTask = switch (type) {
-            case TODO -> new ToDo(Parser.parseTodo(input));
+            case TODO -> new ToDo(Parser.parseTodo(arguments)); // Logic moved to help methods
             case DEADLINE -> {
-                String[] dParts = Parser.parseDeadline(input);
+                String[] dParts = Parser.parseDeadline(arguments);
                 yield new Deadline(dParts[0], dParts[1]);
             }
             case EVENT -> {
-                String[] eParts = Parser.parseEvent(input);
+                String[] eParts = Parser.parseEvent(arguments);
                 yield new Event(eParts[0], eParts[1], eParts[2]);
             }
-            default -> throw new HowlyException("Please specify an appropriate command: todo, deadline, event");
+            default -> throw new HowlyException("Unknown task type.");
             };
 
             tasks.add(newTask);
@@ -62,7 +62,7 @@ public class AddCommand extends Command {
                     "Now you have " + tasks.size() + " tasks in the list."
             );
         } catch (java.time.format.DateTimeParseException e) {
-            throw new HowlyException("Please use the date format yyyy-mm-dd (Eg: 2025-12-31).");
+            throw new HowlyException("Invalid date format. Use yyyy-mm-dd.");
         }
     }
 }

@@ -11,12 +11,6 @@ import howly.ui.Ui;
  * arguments are provided and signals the main loop to stop.
  */
 public class ExitCommand extends Command {
-    private final String input;
-
-    public ExitCommand(String input) {
-        this.input = input;
-    }
-
     /**
      * Executes the exit command by verifying that the input contains no trailing
      * arguments and displaying a farewell message to the user.
@@ -28,11 +22,6 @@ public class ExitCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
-        // Check if there is anything after the word "bye"
-        String[] parts = input.split(" ", 2);
-        if (parts.length > 1 && !parts[1].trim().isEmpty()) {
-            throw new HowlyException("The 'bye' command should not have any arguments after it.");
-        }
         return "Bye. Hope to see you again soon!";
     }
 
