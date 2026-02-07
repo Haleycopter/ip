@@ -33,10 +33,7 @@ public class UpdateCommand extends Command {
         Task taskToUpdate = tasks.get(index);
         String oldDescription = taskToUpdate.getDescription();
         taskToUpdate.setDescription(newDescription);
-        
-        // Save changes to disk
         storage.save(tasks.getTasks());
-
         return "Got it. I've updated the description for this task:\n"
                 + "  From: " + oldDescription + "\n"
                 + "  To:   " + newDescription;

@@ -8,7 +8,7 @@ import java.time.LocalDate;
  * providing common functionality for descriptions and completion status.
  */
 public class Task {
-    private final String description;
+    private String description;
     private boolean isDone;
 
     /**
@@ -63,6 +63,20 @@ public class Task {
      */
     public boolean isOnDate(LocalDate date) {
         return false;
+    }
+
+    /**
+     * @param description The new description defined by user input.
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * @return The current description of the task.
+     */
+    public String getDescription() {
+        return description;
     }
 
     /**
