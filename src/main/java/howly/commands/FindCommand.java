@@ -17,10 +17,24 @@ import howly.ui.Ui;
 public class FindCommand extends Command {
     private final String keyword;
 
+    /**
+     * Constructs a {@code FindCommand} with the specified search keyword.
+     *
+     * @param keyword The string to search for within the task descriptions.
+     */
     public FindCommand(String keyword) {
         this.keyword = keyword;
     }
 
+    /**
+     * Executes the find command by filtering the task list for matches.
+     * The search is case-insensitive and returns an indexed list of matching tasks.
+     * @param tasks The list of tasks to be operated on.
+     * @param ui The user interface used to interact with the user.
+     * @param storage The storage system used to save or load task data.
+     * @return A string containing the indexed list of matching tasks or a "not found" message.
+     * @throws HowlyException If an error occurs during execution.
+     */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
         List<Task> matchingTasks = tasks.getTasks().stream()
