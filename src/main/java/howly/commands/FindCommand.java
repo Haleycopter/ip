@@ -25,11 +25,7 @@ public class FindCommand extends Command {
     public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
         List<Task> matchingTasks = tasks.getTasks().stream()
                 .filter(t -> t.toString().toLowerCase().contains(keyword.toLowerCase()))
-                .collect(Collectors.toList());
-
-        if (matchingTasks.isEmpty()) {
-            return "No matching tasks found for: " + keyword;
-        }
+                .toList();
 
         if (matchingTasks.isEmpty()) {
             return "No matching tasks found for: " + keyword;
