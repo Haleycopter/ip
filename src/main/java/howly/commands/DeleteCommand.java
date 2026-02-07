@@ -12,10 +12,10 @@ import howly.ui.Ui;
  * This class handles the validation of the task index and the removal of the task.
  */
 public class DeleteCommand extends Command {
-    private final String input;
+    private final int targetIndex;
 
-    public DeleteCommand(String input) {
-        this.input = input;
+    public DeleteCommand(int index) {
+        this.targetIndex = index;
     }
 
     /**
@@ -31,19 +31,15 @@ public class DeleteCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
-        String[] parts = input.split(" ");
-        if (parts.length > 2) {
-            throw new HowlyException("The 'delete' command only accepts a single task number.");
+        assert targetIndex >= 0 : "Target index for deletion should be non-negative"; //
+
+        if (targetIndex >= tasks.size()) {
+            throw new HowlyException("Task index " + (targetIndex + 1) + " does not exist.");
         }
 
-        int index = Parser.parseIndex(input);
-        if (index < 0 || index >= tasks.size()) {
-            throw new HowlyException("That task doesn't exist.");
-        }
-
-        Task removedTask = tasks.delete(index);
+        Task deletedTask = tasks.delete(targetIndex);
         storage.save(tasks.getTasks());
-        return "Noted. I've removed this task:\n " + removedTask
+        return "Noted. I've removed this task:\n  " + deletedTask
                 + "\nNow you have " + tasks.size() + " tasks in the list.";
     }
 }

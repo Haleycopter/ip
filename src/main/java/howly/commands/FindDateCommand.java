@@ -15,10 +15,10 @@ import howly.ui.Ui;
  * This class handles date parsing and iterates through the task list to find matches.
  */
 public class FindDateCommand extends Command {
-    private final String input;
+    private final LocalDate targetDate;
 
-    public FindDateCommand(String input) {
-        this.input = input;
+    public FindDateCommand(LocalDate date) {
+        this.targetDate = date;
     }
 
     /**
@@ -36,25 +36,17 @@ public class FindDateCommand extends Command {
      */
     @Override
     public String execute(TaskList tasks, Ui ui, Storage storage) throws HowlyException {
-        String[] parts = input.split(" ");
-        if (parts.length > 2) {
-            throw new HowlyException("The 'finddate' command should only contain a date. Eg: finddate 2026-01-23");
-        }
-        LocalDate searchDate = Parser.parseDate(input);
         StringBuilder sb = new StringBuilder("Here are the tasks occurring on "
-                + searchDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":\n");
+                + targetDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy")) + ":\n");
 
         int count = 0;
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
-            if (task.isOnDate(searchDate)) {
+            if (task.isOnDate(targetDate)) {
                 count++;
                 sb.append(count).append(".").append(task).append("\n");
             }
         }
-        if (count == 0) {
-            return "No tasks found for this date.";
-        }
-        return sb.toString().trim();
+        return count == 0 ? "No tasks found for this date." : sb.toString().trim();
     }
 }
