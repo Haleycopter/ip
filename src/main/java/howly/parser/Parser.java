@@ -12,6 +12,7 @@ import howly.commands.FindCommand;
 import howly.commands.FindDateCommand;
 import howly.commands.ListCommand;
 import howly.commands.MarkCommand;
+import howly.commands.UpdateCommand;
 import howly.common.HowlyException;
 
 /**
@@ -44,11 +45,15 @@ public class Parser {
         case UNMARK -> prepareMark(arguments, false);
         case FINDDATE -> prepareFindDate(arguments);
         case FIND -> prepareFind(arguments);
+        case UPDATE -> prepareUpdate(arguments);
         case TODO, DEADLINE, EVENT -> prepareAdd(arguments, type);
         default -> throw new HowlyException("I'm sorry, I don't know what that means.");
         };
     }
 
+    /**
+     * Prepares an AddCommand by validating the description.
+     */
     private static Command prepareAdd(String args, CommandType type) throws HowlyException {
         if (args.isEmpty()) {
             throw new HowlyException("The description of a " + type + " cannot be empty.");
@@ -56,6 +61,9 @@ public class Parser {
         return new AddCommand(args, type);
     }
 
+    /**
+     * Prepares an ExitCommand by ensuring no arguments are present.
+     */
     private static Command prepareExit(String args) throws HowlyException {
         if (!args.isEmpty()) {
             throw new HowlyException("The 'bye' command should not have arguments.");
@@ -63,6 +71,9 @@ public class Parser {
         return new ExitCommand();
     }
 
+    /**
+     * Prepares a DeleteCommand by parsing and validating the task index.
+     */
     private static Command prepareDelete(String args) throws HowlyException {
         if (args.isEmpty()) {
             throw new HowlyException("The 'delete' command requires an index.");
@@ -76,6 +87,9 @@ public class Parser {
         }
     }
 
+    /**
+     * Prepares a ListCommand by ensuring no arguments are present.
+     */
     private static Command prepareList(String args) throws HowlyException {
         if (!args.isEmpty()) {
             throw new HowlyException("The 'list' command should not have arguments.");
@@ -83,6 +97,9 @@ public class Parser {
         return new ListCommand();
     }
 
+    /**
+     * Prepares a MarkCommand by parsing the index and setting the completion status.
+     */
     private static Command prepareMark(String args, boolean isMark) throws HowlyException {
         if (args.isEmpty()) {
             throw new HowlyException("Please specify a task index to mark/unmark.");
@@ -96,6 +113,9 @@ public class Parser {
         }
     }
 
+    /**
+     * Prepares a FindCommand by validating the search keyword.
+     */
     private static Command prepareFind(String args) throws HowlyException {
         if (args.isEmpty()) {
             throw new HowlyException("The 'find' command requires a keyword.");
@@ -103,12 +123,36 @@ public class Parser {
         return new FindCommand(args);
     }
 
+    /**
+     * Prepares a FindDateCommand by parsing the specified date.
+     */
     private static Command prepareFindDate(String args) throws HowlyException {
         if (args.isEmpty()) {
             throw new HowlyException("The 'finddate' command requires a date. Eg: finddate 2026-01-23");
         }
         LocalDate date = parseDate(args.trim());
         return new FindDateCommand(date);
+    }
+
+    /**
+     * Prepares an UpdateCommand by extracting the task index and the new description.
+     */
+    private static Command prepareUpdate(String args) throws HowlyException {
+        if (!args.contains("/desc")) {
+            throw new HowlyException("Update command requires /desc. Eg: update 1 /desc New Name");
+        }
+        try {
+            String[] parts = args.split("/desc", 2);
+            int index = Integer.parseInt(parts[0].trim()) - 1;
+            String newDesc = parts[1].trim();
+            if (newDesc.isEmpty()) {
+                throw new HowlyException("The new description cannot be empty.");
+            }
+            assert index >= 0 : "Parsed update index should be non-negative";
+            return new UpdateCommand(index, newDesc);
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            throw new HowlyException("Invalid format. Use: update [index] /desc [new description]");
+        }
     }
 
     /**
