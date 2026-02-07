@@ -69,6 +69,7 @@ public class Parser {
         }
         try {
             int index = Integer.parseInt(args) - 1;
+            assert index >= 0 : "Parsed task index should be non-negative";
             return new DeleteCommand(index);
         } catch (NumberFormatException e) {
             throw new HowlyException("Please provide a valid numeric index.");
@@ -88,6 +89,7 @@ public class Parser {
         }
         try {
             int index = Integer.parseInt(args) - 1;
+            assert index >= 0 : "Parsed task index should be non-negative";
             return new MarkCommand(index, isMark);
         } catch (NumberFormatException e) {
             throw new HowlyException("The task index must be a valid number.");
