@@ -36,7 +36,10 @@ public class Howly {
     }
 
     /**
-     * Constructor overload
+     * Initializes the Howly application with a default file path.
+     * This no-argument constructor is required for compatibility with the JavaFX
+     * initialization process, ensuring the app can start without an explicit
+     * path provided by the GUI launcher.
      */
     public Howly() {
         this(FILE_PATH);
