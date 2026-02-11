@@ -30,13 +30,13 @@ Howly is a **local memory-retaining, desktop chatbot app for managing tasks, opt
    
 ![Product Screenshot](Ui.png)
 
-5. Type the command in the command box and press Enter or click `Send` to execute it.
-6. Some example commands you can try:
+4. Type the command in the command box and press Enter or click `Send` to execute it.
+5. Some example commands you can try:
    * `todo meet friend` : Adds a task named `meet friend` to the task list.
    * `list` : Lists all tasks.
    * `mark 1`: marks the task with index 1 with an `X`.
    * `delete 1`: deletes the task with index 1 and updates task list.
-7. Refer to the [Features](https://haleycopter.github.io/ip/#features-) section below for details of each command.
+6. Refer to the [Features](https://haleycopter.github.io/ip/#features-) section below for details of each command.
 
 ## Features 📒
 
