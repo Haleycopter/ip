@@ -92,7 +92,7 @@ Outcome: Lists out all tasks with matching date specified.
 | **Update** | `update INDEX NEW_DESCRIPTION` <br> e.g. `update 1 read chapter 2` |
 | **Delete** | `delete INDEX` <br> e.g. `delete 3` |
 | **Find** | `find DESCRIPTION` <br> e.g. `find book` |
-| **Find Date** | `find DATE` <br> e.g. `find 2026-01-11` |
+| **Find Date** | `finddate DATE` <br> e.g. `find 2026-01-11` |
 | **List** | `list` |
 | **Exit** | `bye` |
 
