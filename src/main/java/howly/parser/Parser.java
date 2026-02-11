@@ -214,7 +214,15 @@ public class Parser {
                 || parts[1].trim().isEmpty() || parts[2].trim().isEmpty()) {
             throw new HowlyException("Event description, /from, and /to fields cannot be empty.");
         }
-        return new String[]{parts[0].trim(), parts[1].trim(), parts[2].trim()};
+        String desc = parts[0].trim();
+        String startStr = parts[1].trim();
+        String endStr = parts[2].trim();
+        LocalDate startDate = parseDate(startStr);
+        LocalDate endDate = parseDate(endStr);
+        if (startDate.isAfter(endDate)) {
+            throw new HowlyException("The start date (/from) cannot be after the end date (/to)!");
+        }
+        return new String[]{desc, startStr, endStr};
     }
 
     /**
