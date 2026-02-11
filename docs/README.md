@@ -27,8 +27,8 @@ Howly is a **local memory-retaining, desktop chatbot app for managing tasks, opt
 2. Download the latest `.jar` file from [here](https://github.com/Haleycopter/ip/releases/download/A-Jar/ip.jar).
 3. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar ip.jar` command to run the application.\
    A GUI similar to the below should appear in a few seconds. Note that you'll be greeted by Howly with no tasks stored yet.
-   
-![Product Screenshot](Ui.png)
+
+   ![Product Screenshot](Ui.png)
 
 4. Type the command in the command box and press Enter or click `Send` to execute it.
 5. Some example commands you can try:
