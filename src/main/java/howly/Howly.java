@@ -81,7 +81,8 @@ public class Howly {
             Command c = Parser.parse(input);
             return c.execute(tasks, ui, storage);
         } catch (HowlyException | NumberFormatException e) {
-            return "Gahhh! " + e.getMessage();
+            return "Gahhh! What's the point in living if I can't be beautiful...\n"
+                    + e.getMessage();
         }
     }
 
