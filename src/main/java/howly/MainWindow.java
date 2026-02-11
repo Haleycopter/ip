@@ -22,6 +22,7 @@ public class MainWindow extends AnchorPane {
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/calcifer.png"));
     private Image howlyImage = new Image(this.getClass().getResourceAsStream("/images/howl.png"));
+    private Image poorHowly = new Image(this.getClass().getResourceAsStream("/images/poorhowl.png"));
 
     /**
      * Initializes the controller. Binds the scroll pane to the dialog container's height
@@ -55,9 +56,13 @@ public class MainWindow extends AnchorPane {
     private void handleUserInput() {
         String input = userInput.getText();
         String response = howly.getResponse(input);
-        dialogContainer.getChildren().addAll(
-                DialogBox.getUserDialog(input, userImage),
-                DialogBox.getHowlyDialog(response, howlyImage)
+
+        //AI assisted: implement error message check to display error image
+        boolean isError = response.contains("Gahhh! ");
+
+        Image currentHowlyImage = isError ? poorHowly : howlyImage;
+        dialogContainer.getChildren().addAll(DialogBox.getUserDialog(input, userImage),
+                DialogBox.getHowlyDialog(response, currentHowlyImage)
         );
         userInput.clear();
     }

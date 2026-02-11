@@ -80,8 +80,8 @@ public class Howly {
         try {
             Command c = Parser.parse(input);
             return c.execute(tasks, ui, storage);
-        } catch (HowlyException e) {
-            return e.getMessage();
+        } catch (HowlyException | NumberFormatException e) {
+            return "Gahhh! " + e.getMessage();
         }
     }
 
