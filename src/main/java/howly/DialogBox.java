@@ -51,9 +51,16 @@ public class DialogBox extends HBox {
         return new DialogBox(text, img);
     }
 
-    public static DialogBox getHowlyDialog(String text, Image img) {
+    public static DialogBox getHowlyDialog(String text, Image img, boolean isError) {
         var db = new DialogBox(text, img);
         db.flip();
+        if (isError) {
+            db.applyErrorStyle();
+        }
         return db;
+    }
+
+    private void applyErrorStyle() {
+        this.getStyleClass().add("error-dialog");
     }
 }

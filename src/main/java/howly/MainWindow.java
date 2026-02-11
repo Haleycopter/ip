@@ -34,7 +34,7 @@ public class MainWindow extends AnchorPane {
 
         String greeting = "Hello! I'm Howly\nWhat can I do for you?";
         dialogContainer.getChildren().addAll(
-                DialogBox.getHowlyDialog(greeting, howlyImage)
+                DialogBox.getHowlyDialog(greeting, howlyImage, false)
         );
     }
 
@@ -62,7 +62,7 @@ public class MainWindow extends AnchorPane {
 
         Image currentHowlyImage = isError ? poorHowly : howlyImage;
         dialogContainer.getChildren().addAll(DialogBox.getUserDialog(input, userImage),
-                DialogBox.getHowlyDialog(response, currentHowlyImage)
+                DialogBox.getHowlyDialog(response, currentHowlyImage, isError)
         );
         userInput.clear();
     }
