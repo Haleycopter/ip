@@ -11,6 +11,13 @@ Howly is a **local memory-retaining, desktop chatbot app for managing tasks, opt
     * [Updating a Task: `update`](https://haleycopter.github.io/ip/#updating-a-task-update)
     * [Finding a Task with a specific description: `find`](https://haleycopter.github.io/ip/#finding-a-task-with-a-specific-description-find)
     * [Finding a Task with a specific date: `finddate`](https://haleycopter.github.io/ip/#finding-a-task-with-a-specific-date-finddate)
+  * [Adding a ToDo: `todo`](https://haleycopter.github.io/ip/#adding-a-todo-todo)
+  * [Adding a Deadline: `deadline`](https://haleycopter.github.io/ip/#adding-a-deadline-deadline)
+  * [Adding an Event: `event`](https://haleycopter.github.io/ip/#adding-an-event-event)
+  * [Marking / Unmarking a task: `mark` or `unmark`](https://haleycopter.github.io/ip/#marking--unmarking-a-task-mark-or-unmark)
+  * [Updating a Task: `update`](https://haleycopter.github.io/ip/#updating-a-task-update)
+  * [Finding a Task with a specific description: `find`](https://haleycopter.github.io/ip/#finding-a-task-with-a-specific-description-find)
+  * [Finding a Task with a specific date: `finddate`](https://haleycopter.github.io/ip/#finding-a-task-with-a-specific-date-finddate)
 * [Command Summary](https://haleycopter.github.io/ip/#command-summary-)
 * [FAQ](https://haleycopter.github.io/ip/#faq)
 
@@ -39,6 +46,67 @@ Howly is a **local memory-retaining, desktop chatbot app for managing tasks, opt
     >   * e.g. in `todo DESCRIPTION`, `DESCRIPTION` is a parameter which can be used as `todo eat meal`.
 > * Parameters **cannot** be in any order.
     >   * e.g. if the command specifies `deadline DESCRIPTION /by YYYY-MM-DD`, `deadline /by YYYY-MM-DD DESCRIPTION` is **NOT** accepted.
+
+### Adding a ToDo: `todo`
+Adds a task with a task name.\
+Format: `todo DESCRIPTION`\
+Example: `todo meet friend`\
+Outcome: Adds the todo to your task list. Run `list` to check!
+
+### Adding a Deadline: `deadline`
+Adds a task with a specific deadline date.\
+Format: `deadline DESCRIPTION /by YYYY-MM-DD`\
+Example: `deadline return book /by 2026-12-01`\
+Outcome: Adds the deadline to your task list.
+
+### Adding an Event: `event`
+Adds a task that occurs during a specific time period.\
+Format: `event DESCRIPTION /from YYYY-MM-DD /to YYYY-MM-DD`\
+Example: `event project meeting /from 2026-02-11 /to 2026-02-12`\
+Outcome: Adds the event to your task list.
+
+### Marking / Unmarking a task: `mark` or `unmark`
+Marks or unmarks the task specified by the index.\
+Format: `mark INDEX`\
+Example: `mark 1`\
+Outcome: Adds or removes an `X` in the checkbox of the specified task.
+
+### Updating a Task: `update`
+Updates the description of an existing task.\
+Format: `update INDEX NEW_DESCRIPTION`\
+Example: `update 1 buy more flowers`\
+Outcome: Changes the description of the first task.
+
+### Finding a Task with a specific description: `find`
+Finds and lists all tasks with the description specified after the `find` command.\
+Format: `find DESCRIPTION`\
+Example: `find friend`\
+Outcome: Lists out all tasks with matching description specified.
+
+### Finding a Task with a specific date: `finddate`
+Finds and lists all tasks with the date specified after the `finddate` command.\
+Format: `finddate YYYY-MM-DD`\
+Example: `find 2026-01-11`\
+Outcome: Lists out all tasks with matching date specified.
+   
+![Product Screenshot](Ui.png)
+
+5. Type the command in the command box and press Enter or click `Send` to execute it.
+6. Some example commands you can try:
+   * `todo meet friend` : Adds a task named `meet friend` to the task list.
+   * `list` : Lists all tasks.
+   * `mark 1`: marks the task with index 1 with an `X`.
+   * `delete 1`: deletes the task with index 1 and updates task list.
+7. Refer to the [Features](https://haleycopter.github.io/ip/#features-) section below for details of each command.
+
+## Features 📒
+
+> [!IMPORTANT]
+> **Notes about the command format:**
+> * Words in `UPPER_CASE` are the parameters to be supplied by the user.
+>   * e.g. in `todo DESCRIPTION`, `DESCRIPTION` is a parameter which can be used as `todo eat meal`.
+> * Parameters **cannot** be in any order.
+>   * e.g. if the command specifies `deadline DESCRIPTION /by YYYY-MM-DD`, `deadline /by YYYY-MM-DD DESCRIPTION` is **NOT** accepted.
 
 ### Adding a ToDo: `todo`
 Adds a task with a task name.\
