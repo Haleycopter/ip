@@ -27,67 +27,6 @@ Howly is a **local memory-retaining, desktop chatbot app for managing tasks, opt
 2. Download the latest `.jar` file from [here](https://github.com/Haleycopter/ip/releases/download/A-Jar/ip.jar).
 3. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar ip.jar` command to run the application.\
    A GUI similar to the below should appear in a few seconds. Note that you'll be greeted by Howly with no tasks stored yet.
-
-![Product Screenshot](/docs/Ui.png)
-
-5. Type the command in the command box and press Enter or click `Send` to execute it.
-6. Some example commands you can try:
-    * `todo meet friend` : Adds a task named `meet friend` to the task list.
-    * `list` : Lists all tasks.
-    * `mark 1`: marks the task with index 1 with an `X`.
-    * `delete 1`: deletes the task with index 1 and updates task list.
-7. Refer to the [Features](https://haleycopter.github.io/ip/#features-) section below for details of each command.
-
-## Features 📒
-
-> [!IMPORTANT]
-> **Notes about the command format:**
-> * Words in `UPPER_CASE` are the parameters to be supplied by the user.
-    >   * e.g. in `todo DESCRIPTION`, `DESCRIPTION` is a parameter which can be used as `todo eat meal`.
-> * Parameters **cannot** be in any order.
-    >   * e.g. if the command specifies `deadline DESCRIPTION /by YYYY-MM-DD`, `deadline /by YYYY-MM-DD DESCRIPTION` is **NOT** accepted.
-
-### Adding a ToDo: `todo`
-Adds a task with a task name.\
-Format: `todo DESCRIPTION`\
-Example: `todo meet friend`\
-Outcome: Adds the todo to your task list. Run `list` to check!
-
-### Adding a Deadline: `deadline`
-Adds a task with a specific deadline date.\
-Format: `deadline DESCRIPTION /by YYYY-MM-DD`\
-Example: `deadline return book /by 2026-12-01`\
-Outcome: Adds the deadline to your task list.
-
-### Adding an Event: `event`
-Adds a task that occurs during a specific time period.\
-Format: `event DESCRIPTION /from YYYY-MM-DD /to YYYY-MM-DD`\
-Example: `event project meeting /from 2026-02-11 /to 2026-02-12`\
-Outcome: Adds the event to your task list.
-
-### Marking / Unmarking a task: `mark` or `unmark`
-Marks or unmarks the task specified by the index.\
-Format: `mark INDEX`\
-Example: `mark 1`\
-Outcome: Adds or removes an `X` in the checkbox of the specified task.
-
-### Updating a Task: `update`
-Updates the description of an existing task.\
-Format: `update INDEX NEW_DESCRIPTION`\
-Example: `update 1 buy more flowers`\
-Outcome: Changes the description of the first task.
-
-### Finding a Task with a specific description: `find`
-Finds and lists all tasks with the description specified after the `find` command.\
-Format: `find DESCRIPTION`\
-Example: `find friend`\
-Outcome: Lists out all tasks with matching description specified.
-
-### Finding a Task with a specific date: `finddate`
-Finds and lists all tasks with the date specified after the `finddate` command.\
-Format: `finddate YYYY-MM-DD`\
-Example: `find 2026-01-11`\
-Outcome: Lists out all tasks with matching date specified.
    
 ![Product Screenshot](Ui.png)
 
