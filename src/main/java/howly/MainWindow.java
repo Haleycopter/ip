@@ -58,7 +58,7 @@ public class MainWindow extends AnchorPane {
         String response = howly.getResponse(input);
 
         //AI assisted: implement error message check to display error image
-        boolean isError = response.contains("Gahhh! ");
+        boolean isError = response.contains("Gahhh! What's the point in living if I can't be beautiful...");
 
         Image currentHowlyImage = isError ? poorHowly : howlyImage;
         dialogContainer.getChildren().addAll(DialogBox.getUserDialog(input, userImage),
