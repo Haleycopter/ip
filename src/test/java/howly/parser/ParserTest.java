@@ -19,4 +19,12 @@ public class ParserTest {
             assertEquals("The start date (/from) cannot be after the end date (/to)!", e.getMessage());
         }
     }
+
+    @Test
+    public void parseDeadline_validInput_returnsCorrectDeadline() throws HowlyException {
+        String input = "deadline Submit project /by 2026-02-20";
+        String[] result = Parser.parseDeadline(input);
+        assertEquals("Submit project", result[0]);
+        assertEquals("2026-02-20", result[1]);
+    }
 }
