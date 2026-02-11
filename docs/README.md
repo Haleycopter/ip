@@ -12,6 +12,7 @@ Howly is a **local memory-retaining, desktop chatbot app for managing tasks, opt
   * [Finding a Task with a specific description: `find`](https://github.com/Haleycopter/ip/edit/master/docs/README.md#finding-a-task-with-a-specific-description-find)
   * [Finding a Task with a specific date: `finddate`](https://github.com/Haleycopter/ip/edit/master/docs/README.md#finding-a-task-with-a-specific-date-finddate)
 * [Command Summary](https://github.com/Haleycopter/ip/edit/master/docs/README.md#command-summary)
+* [FAQ](https://github.com/Haleycopter/ip/edit/master/docs/README.md#faq)
 
 ## Quick Start :computer:
 1. Ensure you have Java `17` or above installed in your Computer.\
