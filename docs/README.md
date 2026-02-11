@@ -1,4 +1,4 @@
-# Howly User Guide :crystal_ball:
+# Howly User Guide 🔮
 
 Howly is a **local memory-retaining, desktop chatbot app for managing tasks, optimized for use via a Graphic User Interface (GUI)**. Howly helps you keep track of your daily to-dos, deadlines and events, themed upon Howl's Moving Castle.
 
@@ -14,7 +14,7 @@ Howly is a **local memory-retaining, desktop chatbot app for managing tasks, opt
 * [Command Summary](https://github.com/Haleycopter/ip/blob/master/docs/README.md#command-summary-fast_forward)
 * [FAQ](https://github.com/Haleycopter/ip/blob/master/docs/README.md#faq)
 
-## Quick Start :computer:
+## Quick Start 💻
 1. Ensure you have Java `17` or above installed in your Computer.\
    Mac users: Ensure you are using an exact Azul JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 2. Download the latest `.jar` file from [here](https://github.com/Haleycopter/ip/releases/download/A-Jar/ip.jar).
@@ -31,7 +31,7 @@ Howly is a **local memory-retaining, desktop chatbot app for managing tasks, opt
    * `delete 1`: deletes the task with index 1 and updates task list.
 7. Refer to the [Features](https://github.com/Haleycopter/ip/blob/master/docs/README.md#features-ledger) section below for details of each command.
 
-## Features :ledger:
+## Features 📒
 
 > [!IMPORTANT]
 > **Notes about the command format:**
@@ -82,7 +82,7 @@ Format: `finddate YYYY-MM-DD`\
 Example: `find 2026-01-11`\
 Outcome: Lists out all tasks with matching date specified.
 
-## Command Summary :fast_forward:
+## Command Summary ⏩
 
 | Action | Format, Examples |
 | :--- | :--- |
