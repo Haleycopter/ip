@@ -2,17 +2,17 @@
 
 Howly is a **local memory-retaining, desktop chatbot app for managing tasks, optimized for use via a Graphic User Interface (GUI)**. Howly helps you keep track of your daily to-dos, deadlines and events, themed upon Howl's Moving Castle.
 
-* [Quick Start](https://github.com/Haleycopter/ip/blob/master/docs/README.md#quick-start-computer)
-* [Features](https://github.com/Haleycopter/ip/blob/master/docs/README.md#features-ledger)
-  * [Adding a ToDo: `todo`](https://github.com/Haleycopter/ip/blob/master/docs/README.md#adding-a-todo-todo)
-  * [Adding a Deadline: `deadline`](https://github.com/Haleycopter/ip/blob/master/docs/README.md#adding-a-deadline-deadline)
-  * [Adding an Event: `event`](https://github.com/Haleycopter/ip/blob/master/docs/README.md#adding-an-event-event)
-  * [Marking / Unmarking a task: `mark` or `unmark`](https://github.com/Haleycopter/ip/blob/master/docs/README.md#marking--unmarking-a-task-mark-or-unmark)
-  * [Updating a Task: `update`](https://github.com/Haleycopter/ip/blob/master/docs/README.md#updating-a-task-update)
-  * [Finding a Task with a specific description: `find`](https://github.com/Haleycopter/ip/blob/master/docs/README.md#finding-a-task-with-a-specific-description-find)
-  * [Finding a Task with a specific date: `finddate`](https://github.com/Haleycopter/ip/blob/master/docs/README.md#finding-a-task-with-a-specific-date-finddate)
-* [Command Summary](https://github.com/Haleycopter/ip/blob/master/docs/README.md#command-summary-fast_forward)
-* [FAQ](https://github.com/Haleycopter/ip/blob/master/docs/README.md#faq)
+* [Quick Start](https://haleycopter.github.io/ip/#quick-start-)
+* [Features](https://haleycopter.github.io/ip/#features-)
+  * [Adding a ToDo: `todo`](https://haleycopter.github.io/ip/#adding-a-todo-todo)
+  * [Adding a Deadline: `deadline`](https://haleycopter.github.io/ip/#adding-a-deadline-deadline)
+  * [Adding an Event: `event`](https://haleycopter.github.io/ip/#adding-an-event-event)
+  * [Marking / Unmarking a task: `mark` or `unmark`](https://haleycopter.github.io/ip/#marking--unmarking-a-task-mark-or-unmark)
+  * [Updating a Task: `update`](https://haleycopter.github.io/ip/#updating-a-task-update)
+  * [Finding a Task with a specific description: `find`](https://haleycopter.github.io/ip/#finding-a-task-with-a-specific-description-find)
+  * [Finding a Task with a specific date: `finddate`](https://haleycopter.github.io/ip/#finding-a-task-with-a-specific-date-finddate)
+* [Command Summary](https://haleycopter.github.io/ip/#command-summary-)
+* [FAQ](https://haleycopter.github.io/ip/#faq)
 
 ## Quick Start 💻
 1. Ensure you have Java `17` or above installed in your Computer.\
@@ -29,7 +29,7 @@ Howly is a **local memory-retaining, desktop chatbot app for managing tasks, opt
    * `list` : Lists all tasks.
    * `mark 1`: marks the task with index 1 with an `X`.
    * `delete 1`: deletes the task with index 1 and updates task list.
-7. Refer to the [Features](https://github.com/Haleycopter/ip/blob/master/docs/README.md#features-ledger) section below for details of each command.
+7. Refer to the [Features](https://haleycopter.github.io/ip/#features-) section below for details of each command.
 
 ## Features 📒
 
@@ -89,6 +89,7 @@ Outcome: Lists out all tasks with matching date specified.
 | **Add Todo** | `todo DESCRIPTION` <br> e.g. `todo buy bread` |
 | **Add Deadline** | `deadline DESCRIPTION /by YYYY-MM-DD` <br> e.g. `deadline return book /by 2026-12-01` |
 | **Add Event** | `event DESCRIPTION /from YYYY-MM-DD /to YYYY-MM-DD` <br> e.g. `event project meeting /from 2026-02-11 /to 2026-02-12` |
+| **Mark/Unmark Event** | `mark INDEX` or `unmark INDEX` <br> e.g. `mark 1` or `unmark 1`|
 | **Update** | `update INDEX NEW_DESCRIPTION` <br> e.g. `update 1 read chapter 2` |
 | **Delete** | `delete INDEX` <br> e.g. `delete 3` |
 | **Find** | `find DESCRIPTION` <br> e.g. `find book` |
