@@ -2,17 +2,17 @@
 
 Howly is a **local memory-retaining, desktop chatbot app for managing tasks, optimized for use via a Graphic User Interface (GUI)**. Howly helps you keep track of your daily to-dos, deadlines and events, themed upon Howl's Moving Castle.
 
-* [Quick Start](https://github.com/Haleycopter/ip/edit/master/docs/README.md#quick-start)
-* [Features](https://github.com/Haleycopter/ip/edit/master/docs/README.md#features)
-  * [Adding a ToDo: `todo`](https://github.com/Haleycopter/ip/edit/master/docs/README.md#adding-a-todo-todo)
-  * [Adding a Deadline: `deadline`](https://github.com/Haleycopter/ip/edit/master/docs/README.md#adding-a-deadline-deadline)
-  * [Adding an Event: `event`](https://github.com/Haleycopter/ip/edit/master/docs/README.md#adding-an-event-event)
-  * [Marking / Unmarking a task: `mark` or `unmark`](https://github.com/Haleycopter/ip/edit/master/docs/README.md#marking--unmarking-a-task-mark-or-unmark)
-  * [Updating a Task: `update`](https://github.com/Haleycopter/ip/edit/master/docs/README.md#updating-a-task-update)
-  * [Finding a Task with a specific description: `find`](https://github.com/Haleycopter/ip/edit/master/docs/README.md#finding-a-task-with-a-specific-description-find)
-  * [Finding a Task with a specific date: `finddate`](https://github.com/Haleycopter/ip/edit/master/docs/README.md#finding-a-task-with-a-specific-date-finddate)
-* [Command Summary](https://github.com/Haleycopter/ip/edit/master/docs/README.md#command-summary)
-* [FAQ](https://github.com/Haleycopter/ip/edit/master/docs/README.md#faq)
+* [Quick Start](https://github.com/Haleycopter/ip/blob/master/docs/README.md#quick-start-computer)
+* [Features](https://github.com/Haleycopter/ip/blob/master/docs/README.md#features-ledger)
+  * [Adding a ToDo: `todo`](https://github.com/Haleycopter/ip/blob/master/docs/README.md#adding-a-todo-todo)
+  * [Adding a Deadline: `deadline`](https://github.com/Haleycopter/ip/blob/master/docs/README.md#adding-a-deadline-deadline)
+  * [Adding an Event: `event`](https://github.com/Haleycopter/ip/blob/master/docs/README.md#adding-an-event-event)
+  * [Marking / Unmarking a task: `mark` or `unmark`](https://github.com/Haleycopter/ip/blob/master/docs/README.md#marking--unmarking-a-task-mark-or-unmark)
+  * [Updating a Task: `update`](https://github.com/Haleycopter/ip/blob/master/docs/README.md#updating-a-task-update)
+  * [Finding a Task with a specific description: `find`](https://github.com/Haleycopter/ip/blob/master/docs/README.md#finding-a-task-with-a-specific-description-find)
+  * [Finding a Task with a specific date: `finddate`](https://github.com/Haleycopter/ip/blob/master/docs/README.md#finding-a-task-with-a-specific-date-finddate)
+* [Command Summary](https://github.com/Haleycopter/ip/blob/master/docs/README.md#command-summary-fast_forward)
+* [FAQ](https://github.com/Haleycopter/ip/blob/master/docs/README.md#faq)
 
 ## Quick Start :computer:
 1. Ensure you have Java `17` or above installed in your Computer.\
@@ -29,7 +29,7 @@ Howly is a **local memory-retaining, desktop chatbot app for managing tasks, opt
    * `list` : Lists all tasks.
    * `mark 1`: marks the task with index 1 with an `X`.
    * `delete 1`: deletes the task with index 1 and updates task list.
-7. Refer to the [Features](https://github.com/Haleycopter/ip/edit/master/docs/README.md#features) section below for details of each command.
+7. Refer to the [Features](https://github.com/Haleycopter/ip/blob/master/docs/README.md#features-ledger) section below for details of each command.
 
 ## Features :ledger:
 
