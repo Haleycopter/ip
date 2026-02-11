@@ -20,6 +20,7 @@ public class Main extends Application {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/view/MainWindow.fxml"));
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
+            stage.setTitle("Howly Chatbot");
             stage.setScene(scene);
             stage.setResizable(false);
             stage.setMinHeight(600.0);
