@@ -1,5 +1,7 @@
 package howly;
 
+import javafx.animation.PauseTransition; //for exit delay
+import javafx.application.Platform; //for graceful shutdown
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration; //for time measurement
 
 /**
  * Controller for the main GUI of the Howly application.
@@ -65,6 +68,13 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getHowlyDialog(response, currentHowlyImage, isError)
         );
         userInput.clear();
+
+        //close GUI app if user issues "bye" command
+        if (input.trim().equalsIgnoreCase("bye")) {
+            PauseTransition delay = new PauseTransition(Duration.seconds(1));
+            delay.setOnFinished(event -> Platform.exit());
+            delay.play();
+        }
     }
 
     /**
