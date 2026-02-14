@@ -10,9 +10,8 @@ import howly.storage.Storage;
 import howly.ui.Ui;
 
 /**
- * The main class for the Howly chatbot application.
- * Howly is a task management tool that allows users to track todos, deadlines, and events.
- * It handles the initialization of core components and manages the main application loop.
+ * Acts as the main controller for the Howly chatbot application.
+ * Manages the initialization of core components and coordinates the execution of tasks.
  */
 public class Howly {
     private static final String FILE_PATH = "data" + File.separator + "howly.txt";
@@ -22,6 +21,7 @@ public class Howly {
     private TaskList tasks;
 
     /**
+     * Initializes the Howly application with the specified storage file path.
      * @param filePath The path to the file where task data is stored (e.g., "data/howly.txt").
      */
     public Howly(String filePath) {
@@ -37,9 +37,7 @@ public class Howly {
 
     /**
      * Initializes the Howly application with a default file path.
-     * This no-argument constructor is required for compatibility with the JavaFX
-     * initialization process, ensuring the app can start without an explicit
-     * path provided by the GUI launcher.
+     * Provides a no-argument constructor for JavaFX compatibility.
      */
     public Howly() {
         this(FILE_PATH);
@@ -47,8 +45,7 @@ public class Howly {
 
     /**
      * Starts the main application loop.
-     * Continuously reads user commands, parses them, and executes the corresponding actions
-     * until an exit command is received.
+     * Reads and executes commands until an exit command is received.
      */
     public void run() {
         ui.showWelcome();
@@ -71,10 +68,10 @@ public class Howly {
     }
 
     /**
-     * Generates a response for the user's chat message.
+     * Generates a response for the user's chat message input.
      *
      * @param input The raw user input string.
-     * @return Howly's response as a string.
+     * @return Resulting response message from the chatbot.
      */
     public String getResponse(String input) {
         try {
@@ -87,7 +84,7 @@ public class Howly {
     }
 
     /**
-     * Entry point of the Howly application.
+     * Serves as the entry point for the command-line interface of Howly.
      * Initializes the app with the default file path and begins the program execution.
      *
      * @param args Command line arguments (not used).
