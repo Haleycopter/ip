@@ -18,14 +18,15 @@ Howly is a **local memory-retaining, desktop chatbot app for managing tasks, opt
   * [Updating a Task: `update`](https://haleycopter.github.io/ip/#updating-a-task-update)
   * [Finding a Task with a specific description: `find`](https://haleycopter.github.io/ip/#finding-a-task-with-a-specific-description-find)
   * [Finding a Task with a specific date: `finddate`](https://haleycopter.github.io/ip/#finding-a-task-with-a-specific-date-finddate)
+  * [Exiting the app: `bye`](https://haleycopter.github.io/ip/#exiting-the-app-bye)
 * [Command Summary](https://haleycopter.github.io/ip/#command-summary-)
 * [FAQ](https://haleycopter.github.io/ip/#faq)
 
 ## Quick Start 💻
 1. Ensure you have Java `17` or above installed in your Computer.\
    Mac users: Ensure you are using an exact Azul JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
-2. Download the latest `.jar` file from [here](https://github.com/Haleycopter/ip/releases/download/A-Jar/ip.jar).
-3. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar ip.jar` command to run the application.\
+2. Download the latest `.jar` file from [here](https://github.com/Haleycopter/ip/releases/download/v0.2/howly.jar).
+3. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar howly.jar` command to run the application.\
    A GUI similar to the below should appear in a few seconds. Note that you'll be greeted by Howly with no tasks stored yet.
 
    ![Product Screenshot](Ui.png)
@@ -88,6 +89,12 @@ Finds and lists all tasks with the date specified after the `finddate` command.\
 Format: `finddate YYYY-MM-DD`\
 Example: `find 2026-01-11`\
 Outcome: Lists out all tasks with matching date specified.
+
+### Exiting the app: `bye`
+Displays a bye message and closes the app within a second.\
+Format: `bye`\
+Example: `bye`\
+Outcome: Task list is automatically stored for next user session and app closes.
 
 ## Command Summary ⏩
 
