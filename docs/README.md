@@ -117,7 +117,7 @@ Outcome: Task list is automatically stored for next user session and app closes.
 **A**: No, data from your current local device is not shared with another device, nor will this data be automatically populated in the storage of the chatbot when you run on another local device. Ensure you copy current content in `/data/howly.txt` and paste it in the same text file location in your other local device.
 
 **Q**: Where is the `howly.txt` file located?\
-**A**: The file is automatically created in a folder named `data` within the same directory where you placed the `ip.jar` file.
+**A**: The file is automatically created in a folder named `data` within the same directory where you placed the `howly.jar` file.
 
 **Q**: What Java version do I need to run Howly?\
 **A**: Ensure you are using an exact Azul JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html). You can check your version by typing `java -version` in your terminal.
